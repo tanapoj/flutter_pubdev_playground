@@ -5,6 +5,7 @@ import 'package:pubdev_playground/example_guard_1.dart';
 import 'package:pubdev_playground/example_list_1.dart';
 import 'package:pubdev_playground/example_list_3.dart';
 import 'package:pubdev_playground/example_list_2.dart';
+import 'package:pubdev_playground/example_list_4.dart';
 import 'package:pubdev_playground/example_watch_1.dart';
 import 'package:pubdev_playground/example_when_1.dart';
 
@@ -114,6 +115,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const ExampleList3Page(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('\$for 4 animated list'),
+            trailing: const Icon(Icons.keyboard_arrow_right_sharp),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ExampleList4Page(),
                 ),
               );
             },

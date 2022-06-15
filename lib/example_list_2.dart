@@ -166,7 +166,6 @@ class _ExampleList2PageState extends State<ExampleList2Page> {
                     name: runner.next(),
                   )
                 ];
-                print('newList=$newList');
                 items.value = newList;
               },
               child: const Icon(Icons.add),
