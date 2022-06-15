@@ -24,10 +24,8 @@ class WhenBLoCWidget<T> extends BaseBLoCWidget<T> {
       builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
         var value = liveData.value ?? snapshot.data ?? liveData.initialValue;
         Widget Function(BuildContext context, T value)? caseMatchBuilder;
-        print('when caseMatchBuilder :: cases=$cases');
         for (var c in cases) {
           var match = c.predicate(value);
-          print('when :: value=$value, match=$match');
           if (match) {
             caseMatchBuilder = c.builder;
             break;

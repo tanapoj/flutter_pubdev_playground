@@ -31,8 +31,7 @@ class _ExampleWatch1PageState extends State<ExampleWatch1Page> {
               $watch(
                 counter,
                 build: (_, int count) {
-                  return BlinkContainer(
-                    key: UniqueKey(),
+                  return Blink.on(
                     child: Column(
                       children: [
                         Text(
@@ -60,12 +59,34 @@ class _ExampleWatch1PageState extends State<ExampleWatch1Page> {
               ),
               ElevatedButton(
                 onPressed: () {
+                  counter.value++;
+                },
+                child: Row(
+                  children: const [
+                    Icon(Icons.add),
+                    Text('counter.value++'),
+                  ],
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
                   counter.transform((val) => val + 1);
                 },
                 child: Row(
                   children: const [
                     Icon(Icons.add),
                     Text('counter.transform((val) => val + 1)'),
+                  ],
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  counter.mutate((val) => val += 1);
+                },
+                child: Row(
+                  children: const [
+                    Icon(Icons.add),
+                    Text('counter.mutate((val) => val += 1)'),
                   ],
                 ),
               ),

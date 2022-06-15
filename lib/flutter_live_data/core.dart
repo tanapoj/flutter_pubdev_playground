@@ -82,7 +82,11 @@ class LiveData<T> implements LifeCycleObservable {
   LifeCycleObserver? get lifeCycleObserver => _lifeCycleObserver;
 
   set value(T value) {
-    logger.i('"${name ?? ''}" set value: $value');
+    if (name == null) {
+      logger.i('set value: $value');
+    } else {
+      logger.i('"${name ?? ''}" set value: $value');
+    }
     _currentValue = value;
     if (apples.isNotEmpty) {
       for (var fn in apples) {
@@ -114,7 +118,6 @@ class LiveData<T> implements LifeCycleObservable {
   LiveData<T> apply(void Function(LiveData<T> liveData) apply) {
     apples.add(apply);
     applyOnce(apply);
-    print('_.apples=${apples}');
     return this;
   }
 
@@ -150,11 +153,21 @@ class LiveData<T> implements LifeCycleObservable {
   }
 }
 
-LiveData<C> attach<P, C>(LiveData<P> parent, C child) {
+LiveData<C> attach<P, C>(
+  LiveData<P> parent,
+  C child, {
+  String? name,
+}) {
   return parent.attachedItems[child] = LiveData<C>(
     child,
-    name: parent.name != null ? '${parent.name}-child' : null,
+    name: name ?? (parent.name != null ? '${parent.name}-child' : null),
   );
+}
+
+bool unAttach<P, C>(LiveData<P> parent, C child) {
+  var len = parent.attachedItems.length;
+  parent.attachedItems.removeWhere((key, value) => identical(key, child));
+  return parent.attachedItems.length < len;
 }
 
 LiveData<C>? detach<P, C>(LiveData<P> parent, C child) {
@@ -184,9 +197,15 @@ void Function(LiveData<List<T>> liveData) eachItemsInListAsLiveData<T>({
   void Function(LiveData<T> item)? then,
 }) {
   return (LiveData<List<T>> liveData) {
+    int i = 0;
     for (var element in liveData.value) {
-      LiveData<T> lv = attach(liveData, element);
+      LiveData<T> lv = attach(
+        liveData,
+        element,
+        name: '${liveData.name ?? ''}[$i]',
+      );
       then?.call(lv);
+      i++;
     }
   };
 }

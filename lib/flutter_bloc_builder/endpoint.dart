@@ -233,4 +233,49 @@ class $guard<T> extends GuardBuilder<T> {
         },
         build: build,
       );
+
+  factory $guard.isNotEmpty(
+    LiveData<T> lv, {
+    Key? key,
+    required Widget Function(BuildContext context, T value) build,
+  }) =>
+      $guard<T>(
+        lv,
+        key: key,
+        when: (T t) {
+          if (t is List) return t.isNotEmpty;
+          return true;
+        },
+        build: build,
+      );
+
+  factory $guard.isTrue(
+    LiveData<T> lv, {
+    Key? key,
+    required Widget Function(BuildContext context, T value) build,
+  }) =>
+      $guard<T>(
+        lv,
+        key: key,
+        when: (T t) {
+          if (t is bool) return t == true;
+          return false;
+        },
+        build: build,
+      );
+
+  factory $guard.isFalse(
+    LiveData<T> lv, {
+    Key? key,
+    required Widget Function(BuildContext context, T value) build,
+  }) =>
+      $guard<T>(
+        lv,
+        key: key,
+        when: (T t) {
+          if (t is bool) return t == false;
+          return true;
+        },
+        build: build,
+      );
 }

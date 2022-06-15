@@ -34,7 +34,7 @@ class _ExampleWhen1PageState extends State<ExampleWhen1Page> {
                   $watch(
                     counter,
                     build: (_, int count) {
-                      return BlinkContainer(
+                      return Blink(
                         key: UniqueKey(),
                         child: Text(
                           '$count',
@@ -49,26 +49,24 @@ class _ExampleWhen1PageState extends State<ExampleWhen1Page> {
                 ..$case(
                   (int value) => value % 2 == 0,
                   build: (_, int value) {
-                    return BlinkContainer(
+                    return Blink(
                       key: UniqueKey(),
-                      child: Text('[when] $value is Even.'),
+                      child: Text('[case 1] $value is Even.'),
                     );
                   },
                 )
                 ..$case(
                   (int value) => value % 5 == 0,
                   build: (_, int value) {
-                    return BlinkContainer(
-                      key: UniqueKey(),
-                      child: Text('[when] $value is multiply of 5'),
+                    return Blink.on(
+                      child: Text('[case 2] $value is multiply of 5'),
                     );
                   },
                 )
                 ..$else(
                   build: (_, int value) {
-                    return BlinkContainer(
-                      key: UniqueKey(),
-                      child: Text('[when] just $value'),
+                    return Blink.on(
+                      child: Text('[else] just $value'),
                     );
                   },
                 ),
@@ -76,16 +74,14 @@ class _ExampleWhen1PageState extends State<ExampleWhen1Page> {
                     counter,
                     condition: (int c) => c % 2 == 0,
                     build: (_, value) {
-                      return BlinkContainer(
-                        key: UniqueKey(),
+                      return Blink.on(
                         child: Text('[if] $value is Even.'),
                       );
                     },
                   ) |
                   $else(
                     build: (_, value) {
-                      return BlinkContainer(
-                        key: UniqueKey(),
+                      return Blink.on(
                         child: Text('[else] $value is Odd.'),
                       );
                     },
@@ -104,24 +100,32 @@ class _ExampleWhen1PageState extends State<ExampleWhen1Page> {
               const Divider(color: Colors.black),
               $when(toggle) |
                   $true(build: (_, value) {
-                    return BlinkContainer(
-                      key: UniqueKey(),
-                      child: const Text(
-                        '\\',
-                        style: TextStyle(
-                          fontSize: 24,
-                        ),
+                    return Blink.on(
+                      child: Column(
+                        children: const [
+                          Text(
+                            '\\',
+                            style: TextStyle(
+                              fontSize: 24,
+                            ),
+                          ),
+                          Text('[true]'),
+                        ],
                       ),
                     );
                   }) |
                   $false(build: (_, value) {
-                    return BlinkContainer(
-                      key: UniqueKey(),
-                      child: const Text(
-                        '/',
-                        style: TextStyle(
-                          fontSize: 24,
-                        ),
+                    return Blink.on(
+                      child: Column(
+                        children: const [
+                          Text(
+                            '/',
+                            style: TextStyle(
+                              fontSize: 24,
+                            ),
+                          ),
+                          Text('[false]'),
+                        ],
                       ),
                     );
                   }),

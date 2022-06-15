@@ -61,71 +61,108 @@ class _ExampleList4PageState extends State<ExampleList4Page> {
                 sizeFactor: animation,
                 child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          widgets[i],
-                          GestureDetector(
-                            child: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'count!',
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  decoration: TextDecoration.underline,
+                  child: Blink.on(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            widgets[i],
+                            GestureDetector(
+                              child: const Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: Text(
+                                  'mutate()',
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    decoration: TextDecoration.underline,
+                                  ),
                                 ),
                               ),
+                              onTap: () {
+                                var lv = detach(items, items.value[i]);
+                                lv?.mutate((counter) {
+                                  counter.count++;
+                                });
+                              },
                             ),
-                            onTap: () {
-                              var model = detach(items, items.value[i]);
-                              model?.mutate((counter) {
-                                counter.count++;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          ElevatedButton(
-                            child: const Icon(Icons.remove),
-                            onPressed: () {
-                              items.value.removeAt(i);
-                              items.tick();
-
-                              _animatedKey.currentState!.removeItem(i, (_, animation) {
-                                return SizeTransition(
-                                  sizeFactor: animation,
-                                  child: const Card(
-                                    margin: EdgeInsets.all(8),
-                                    elevation: 10,
+                            GestureDetector(
+                              child: const Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: Text(
+                                  'transform()',
+                                  style: TextStyle(
                                     color: Colors.redAccent,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text("Deleted!", style: TextStyle(fontSize: 14)),
-                                    ),
+                                    decoration: TextDecoration.underline,
                                   ),
-                                );
-                              }, duration: const Duration(milliseconds: 400));
-                            },
-                          ),
-                          ElevatedButton(
-                            child: const Icon(Icons.add),
-                            onPressed: () {
-                              items.value.insert(i, Counter(0, name: runner.next()));
-                              items.tick();
+                                ),
+                              ),
+                              onTap: () {
+                                var lv = detach(items, items.value[i]);
+                                lv?.transform((counter) {
+                                  return Counter(counter.count + 1, name: runner.next());
+                                });
+                              },
+                            ),
+                            // GestureDetector(
+                            //   child: const Padding(
+                            //     padding: EdgeInsets.all(4.0),
+                            //     child: Text(
+                            //       'unAttach-attach',
+                            //       style: TextStyle(
+                            //         color: Colors.blue,
+                            //         decoration: TextDecoration.underline,
+                            //       ),
+                            //     ),
+                            //   ),
+                            //   onTap: () {
+                            //     unAttach(items, items.value[i]);
+                            //     items.value[i] = Counter(0, name: runner.next());
+                            //     attach(items, items.value[i]);
+                            //   },
+                            // ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            ElevatedButton(
+                              child: const Icon(Icons.remove),
+                              onPressed: () {
+                                items.value.removeAt(i);
+                                items.tick();
 
-                              _animatedKey.currentState!.insertItem(
-                                i,
-                                duration: const Duration(milliseconds: 200),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
+                                _animatedKey.currentState!.removeItem(i, (_, animation) {
+                                  return SizeTransition(
+                                    sizeFactor: animation,
+                                    child: const Card(
+                                      margin: EdgeInsets.all(8),
+                                      elevation: 10,
+                                      color: Colors.redAccent,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Text("Deleted!", style: TextStyle(fontSize: 14)),
+                                      ),
+                                    ),
+                                  );
+                                }, duration: const Duration(milliseconds: 400));
+                              },
+                            ),
+                            ElevatedButton(
+                              child: const Icon(Icons.add),
+                              onPressed: () {
+                                items.value.insert(i, Counter(0, name: runner.next()));
+                                items.tick();
+
+                                _animatedKey.currentState!.insertItem(
+                                  i,
+                                  duration: const Duration(milliseconds: 200),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -133,8 +170,7 @@ class _ExampleList4PageState extends State<ExampleList4Page> {
           );
         },
         buildItem: (_, Counter item, index) {
-          return BlinkContainer(
-            key: UniqueKey(),
+          return Blink.on(
             child: Text('${item.name} = ${item.count}'),
           );
         },

@@ -22,7 +22,7 @@ class _ExampleGuard1PageState extends State<ExampleGuard1Page> {
   void loadNewCounter() {
     loading.value = true;
     errorMessage.value = null;
-    Future.delayed(Duration(milliseconds: Random().nextInt(1000) + 1000), () {
+    Future.delayed(Duration(milliseconds: 1000), () {
       bool fail = Random().nextInt(3) == 1;
       if (fail) {
         errorMessage.value = 'Cannot load new count';
@@ -69,8 +69,7 @@ class _ExampleGuard1PageState extends State<ExampleGuard1Page> {
                     },
                   ) |
                   $watch(counter, build: (_, int count) {
-                    return BlinkContainer(
-                      key: UniqueKey(),
+                    return Blink.on(
                       child: Text(
                         '$count',
                         style: Theme.of(context).textTheme.headline4,
@@ -102,6 +101,17 @@ class _ExampleGuard1PageState extends State<ExampleGuard1Page> {
                       ),
                     );
                   }),
+              $watch(counter, build: (_, int count) {
+                return Blink.on(
+                  child: Text(
+                    '[watch] counter is $count',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.black26,
+                    ),
+                  ),
+                );
+              }),
             ],
           ),
         ),

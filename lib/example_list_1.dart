@@ -56,9 +56,13 @@ class _ExampleList1PageState extends State<ExampleList1Page> {
             buildItem: (_, String item, index) {
               return Padding(
                 padding: const EdgeInsets.all(8),
-                child: BlinkContainer(
-                  key: UniqueKey(),
-                  child: Text('- $item'),
+                child: Blink.on(
+                  child: Text(
+                    item,
+                    style: const TextStyle(
+                      fontSize: 24,
+                    ),
+                  ),
                 ),
               );
             },

@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 
-class BlinkContainer extends StatefulWidget {
-  const BlinkContainer({
+class Blink extends StatefulWidget {
+  const Blink({
     Key? key,
     required this.child,
   }) : super(key: key);
 
   final Widget child;
 
+  factory Blink.on({
+    required Widget child,
+  }) {
+    return Blink(
+      key: UniqueKey(),
+      child: child,
+    );
+  }
+
   @override
-  State<BlinkContainer> createState() => BlinkContainerState();
+  State<Blink> createState() => BlinkState();
 }
 
-class BlinkContainerState extends State<BlinkContainer> {
+class BlinkState extends State<Blink> {
   double opacity = .0;
 
-  BlinkContainerState() {
+  BlinkState() {
     opacity = 1.0;
     Future.delayed(const Duration(milliseconds: 10), () {
       setState(() {

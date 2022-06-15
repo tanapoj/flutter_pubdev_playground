@@ -85,8 +85,7 @@ class _ExampleList2PageState extends State<ExampleList2Page> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    BlinkContainer(
-                      key: UniqueKey(),
+                    Blink.on(
                       child: Text('${item.name} ${item.count}'),
                     ),
                     Row(
