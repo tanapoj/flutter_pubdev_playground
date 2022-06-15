@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
           ),
           ListTile(
-            title: const Text('\$for 1'),
+            title: const Text('\$for 1 basic'),
             trailing: const Icon(Icons.keyboard_arrow_right_sharp),
             onTap: () {
               Navigator.push(
@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
           ),
           ListTile(
-            title: const Text('\$for 2'),
+            title: const Text('\$for 2 nested counter'),
             trailing: const Icon(Icons.keyboard_arrow_right_sharp),
             onTap: () {
               Navigator.push(
@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
           ),
           ListTile(
-            title: const Text('\$for 3'),
+            title: const Text('\$for 3 nested object'),
             trailing: const Icon(Icons.keyboard_arrow_right_sharp),
             onTap: () {
               Navigator.push(
