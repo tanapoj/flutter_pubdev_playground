@@ -97,4 +97,10 @@ class _ExampleList1PageState extends State<ExampleList1Page> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    items.close();
+    super.dispose();
+  }
 }

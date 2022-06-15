@@ -77,6 +77,7 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
         ]),
       ];
 
+      continentListLv.close();
       continentListLv = LiveData(
         initData,
         name: 'continentsLiveData',
@@ -317,5 +318,11 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    continentListLv.close();
+    super.dispose();
   }
 }

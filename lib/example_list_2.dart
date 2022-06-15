@@ -38,9 +38,7 @@ class _ExampleList2PageState extends State<ExampleList2Page> {
       : items = LiveData([
           Counter(0, name: 'A'),
           Counter(0, name: 'B'),
-        ]).apply(eachItemsInListAsLiveData(then: (liveData) {
-          print(' eachItem.apples=${liveData.apples}');
-        }));
+        ]).apply(eachItemsInListAsLiveData());
 
   ButtonStyle btnLineStyle(Color bg) => ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(bg),
@@ -90,26 +88,33 @@ class _ExampleList2PageState extends State<ExampleList2Page> {
                     ),
                     Row(
                       children: [
-                        ElevatedButton(
-                          child: const Icon(Icons.add),
-                          style: btnLineStyle(Colors.black12),
-                          onPressed: () {
+                        GestureDetector(
+                          child: const Padding(
+                            padding: EdgeInsets.all(4.0),
+                            child: Text(
+                              'x = x+1',
+                              style: TextStyle(
+                                color: Colors.black26,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                          onTap: () {
                             items.value[index].count = items.value[index].count + 1;
                           },
                         ),
-                        ElevatedButton(
-                          child: const Icon(Icons.add),
-                          style: btnLineStyle(Colors.black12),
-                          onPressed: () {
-                            items.mutate((list) {
-                              list[index].count++;
-                            });
-                          },
-                        ),
-                        ElevatedButton(
-                          child: const Icon(Icons.add),
-                          style: btnLineStyle(Colors.deepOrange),
-                          onPressed: () {
+                        GestureDetector(
+                          child: const Padding(
+                            padding: EdgeInsets.all(4.0),
+                            child: Text(
+                              'transform',
+                              style: TextStyle(
+                                color: Colors.redAccent,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                          onTap: () {
                             var itemLiveData = detach(items, item);
                             itemLiveData?.transform((item) {
                               return Counter(
@@ -119,12 +124,35 @@ class _ExampleList2PageState extends State<ExampleList2Page> {
                             });
                           },
                         ),
-                        ElevatedButton(
-                          child: const Icon(Icons.add),
-                          style: btnLineStyle(Colors.green),
-                          onPressed: () {
-                            // var x = items.value[index];
-                            // var itemModel = detach(items, x);
+                        GestureDetector(
+                          child: const Padding(
+                            padding: EdgeInsets.all(4.0),
+                            child: Text(
+                              'mutate',
+                              style: TextStyle(
+                                color: Colors.green,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                          onTap: () {
+                            items.mutate((list) {
+                              list[index].count++;
+                            });
+                          },
+                        ),
+                        GestureDetector(
+                          child: const Padding(
+                            padding: EdgeInsets.all(4.0),
+                            child: Text(
+                              'detach',
+                              style: TextStyle(
+                                color: Colors.green,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                          onTap: () {
                             var itemLiveData = detach(items, item);
                             itemLiveData?.mutate((item) {
                               item.count++;
@@ -173,5 +201,11 @@ class _ExampleList2PageState extends State<ExampleList2Page> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    items.close();
+    super.dispose();
   }
 }

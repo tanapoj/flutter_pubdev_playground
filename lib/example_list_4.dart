@@ -50,7 +50,6 @@ class _ExampleList4PageState extends State<ExampleList4Page> {
       body: $for(
         items,
         buildList: (_, widgets) {
-          print('\$for.buildList widgets(${widgets.length})=$widgets');
           return AnimatedList(
             key: _animatedKey,
             initialItemCount: widgets.length,
@@ -194,5 +193,11 @@ class _ExampleList4PageState extends State<ExampleList4Page> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    items.close();
+    super.dispose();
   }
 }

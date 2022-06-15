@@ -150,6 +150,7 @@ class _ExampleWhen1PageState extends State<ExampleWhen1Page> {
   @override
   void dispose() {
     counter.close();
+    toggle.close();
     super.dispose();
   }
 }

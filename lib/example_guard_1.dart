@@ -122,6 +122,8 @@ class _ExampleGuard1PageState extends State<ExampleGuard1Page> {
   @override
   void dispose() {
     counter.close();
+    loading.close();
+    errorMessage.close();
     super.dispose();
   }
 }
