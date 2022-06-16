@@ -49,7 +49,7 @@ class LiveData<T> implements LifeCycleObservable {
     );
   }
 
-  factory LiveData.one(
+  factory LiveData.once(
     T initValue, {
     String? name,
     StreamController<T>? streamController,

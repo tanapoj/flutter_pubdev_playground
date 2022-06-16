@@ -62,6 +62,27 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
     }));
   }));
 
+  LiveData<int> guideStep = LiveData(0);
+  Timer? _timer1;
+  Timer? _timer2;
+  Timer? _timer3;
+  Timer? _timer4;
+  Timer? _timer5;
+  Timer? _timer6;
+  Timer? _timer7;
+  Timer? _timer8;
+
+  void clearTimer() {
+    _timer1?.cancel();
+    _timer2?.cancel();
+    _timer3?.cancel();
+    _timer4?.cancel();
+    _timer5?.cancel();
+    _timer6?.cancel();
+    _timer7?.cancel();
+    _timer8?.cancel();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -69,6 +90,9 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
   }
 
   init() {
+    guideStep.value = 0;
+    clearTimer();
+
     setState(() {
       var initData = <Continent>[
         Continent(name: 'Asia', countries: [
@@ -114,8 +138,8 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
       //   }
       // });
       // print('===========================');
-
-      Future.delayed(const Duration(seconds: 2), () {
+      _timer1 = Timer(const Duration(seconds: 2), () {
+        guideStep.value = 1;
         var continentLv = detach(continentListLv, continentListLv.value[0])!;
         var countryListLv = detach(continentLv, continentLv.value.countries)!;
         var countryLv = detach(countryListLv, countryListLv.value[0]);
@@ -126,7 +150,8 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
         });
       });
 
-      Future.delayed(const Duration(seconds: 4), () {
+      _timer2 = Timer(const Duration(seconds: 4), () {
+        guideStep.value = 2;
         var continentLv = detach(continentListLv, continentListLv.value[0])!;
         var countryListLv = detach(continentLv, continentLv.value.countries)!;
         var countryLv = detach(countryListLv, countryListLv.value[1])!;
@@ -138,18 +163,20 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
         });
       });
 
-      Future.delayed(const Duration(seconds: 6), () {
+      _timer3 = Timer(const Duration(seconds: 6), () {
+        guideStep.value = 3;
         continentListLv.mutate((continentList) {
           continentList.add(
             Continent(name: 'Europe', countries: [
-              Country(name: 'England', cities: ['London', 'Manchester']),
+              Country(name: 'England', cities: ['London', 'Bristol']),
               Country(name: 'Germany', cities: ['Berlin', 'Bavaria']),
             ]),
           );
         });
       });
 
-      Future.delayed(const Duration(seconds: 8), () {
+      _timer4 = Timer(const Duration(seconds: 8), () {
+        guideStep.value = 4;
         var continentLv = detach(continentListLv, continentListLv.value[0])!;
         var ctListLv = detach(continentLv, continentLv.value.countries)!;
         ctListLv.mutate((countries) {
@@ -159,7 +186,8 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
         });
       });
 
-      Future.delayed(const Duration(seconds: 10), () {
+      _timer5 = Timer(const Duration(seconds: 10), () {
+        guideStep.value = 5;
         var continentLv = detach(continentListLv, continentListLv.value[0])!;
         var countryListLv = detach(continentLv, continentLv.value.countries)!;
         var countryLv = detach(countryListLv, countryListLv.value[1]);
@@ -170,7 +198,8 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
         });
       });
 
-      Future.delayed(const Duration(seconds: 12), () {
+      _timer6 = Timer(const Duration(seconds: 12), () {
+        guideStep.value = 6;
         var continentLv = detach(continentListLv, continentListLv.value[1])!;
         var ctListLv = detach(continentLv, continentLv.value.countries)!;
         ctListLv.mutate((countries) {
@@ -188,12 +217,28 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
       //   });
       // });
 
-      Future.delayed(const Duration(seconds: 14), () {
+      _timer7 = Timer(const Duration(seconds: 14), () {
+        guideStep.value = 7;
         var continentLv = detach(continentListLv, continentListLv.value[1])!;
         var countryListLv = detach(continentLv, continentLv.value.countries)!;
         var countryLv = detach(countryListLv, countryListLv.value[0])!;
-        var citiesLv = detach(countryLv, countryLv.value.cities);
-        citiesLv?.mutate((cities) {
+        var citiesLv = detach(countryLv, countryLv.value.cities)!;
+        citiesLv.mutate((cities) {
+          cities.add(
+            'Manchester',
+          );
+        });
+      });
+
+      _timer8 = Timer(const Duration(seconds: 16), () {
+        guideStep.value = 8;
+        var citiesLv = continentListLv
+            .detachedBy((lv) => lv.value[1])!
+            .detachedBy((lv) => lv.value.countries)!
+            .detachedBy((lv) => lv.value[0])!
+            .detachedBy((lv) => lv.value.cities)!;
+
+        citiesLv.mutate((cities) {
           cities.add(
             'Liverpool',
           );
@@ -211,20 +256,27 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
       body: Column(
         // mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: const [
-                Text('1. add "Khonkaen" to Country "Thailand"'),
-                Text('2. add "Hiroshima" to Cities of Country "Japan"'),
-                Text('3. add "Europe" to Continents'),
-                Text('4. add "China" to Continent "Asia"'),
-                Text('5. add "Hokkaido" to Country "Japan"'),
-                Text('6. add "Russia" to Continent "Europe"'),
-                Text('7. add "Liverpool" to Cities of Country "England"'),
-              ],
-            ),
-          ),
+          $watch(guideStep, build: (_, int step) {
+            TextStyle focusOn(bool con) {
+              return TextStyle(fontWeight: con ? FontWeight.bold : FontWeight.normal);
+            }
+
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Text('1. add "Khonkaen" to Country "Thailand"', style: focusOn(step == 1)),
+                  Text('2. add "Hiroshima" to Cities of Country "Japan"', style: focusOn(step == 2)),
+                  Text('3. add "Europe" to Continents', style: focusOn(step == 3)),
+                  Text('4. add "China" to Continent "Asia"', style: focusOn(step == 4)),
+                  Text('5. add "Hokkaido" to Country "Japan"', style: focusOn(step == 5)),
+                  Text('6. add "Russia" to Continent "Europe"', style: focusOn(step == 6)),
+                  Text('7. add "Manchester" to Cities of Country "England"', style: focusOn(step == 7)),
+                  Text('8. add "Liverpool" to Cities of Country "England"', style: focusOn(step == 8)),
+                ],
+              ),
+            );
+          }),
           Container(
             margin: const EdgeInsets.all(20),
             child: const Text(
@@ -271,7 +323,7 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
                     buildItem: (_, Country country, index2) {
                       var countriesLv = detach(continentLv, continentLv.value.countries)!;
                       var countryLv = detach(countriesLv, countriesLv.value[index2])!;
-                      var citiesLv = detach(countryLv, countryLv.value.cities);
+                      var citiesLv = detach(countryLv, countryLv.value.cities)!;
                       return Blink.on(
                         child: Row(
                           children: [
@@ -282,17 +334,16 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
                               ),
                             ),
                             const Text(' has '),
-                            if (citiesLv != null)
-                              $watch(citiesLv, build: (_, List<String> cities) {
-                                return Blink.on(
-                                  child: Text(
-                                    cities.join(', '),
-                                    style: const TextStyle(
-                                      color: Colors.blue,
-                                    ),
+                            $watch(citiesLv, build: (_, List<String> cities) {
+                              return Blink.on(
+                                child: Text(
+                                  cities.join(', '),
+                                  style: const TextStyle(
+                                    color: Colors.blue,
                                   ),
-                                );
-                              }),
+                                ),
+                              );
+                            }),
                           ],
                         ),
                       );
@@ -323,6 +374,7 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
   @override
   void dispose() {
     continentListLv.close();
+    guideStep.close();
     super.dispose();
   }
 }
