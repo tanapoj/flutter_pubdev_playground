@@ -1,11 +1,7 @@
 import 'dart:async';
-
-import 'package:pubdev_playground/flutter_bloc_builder/endpoint.dart';
-import 'package:pubdev_playground/flutter_live_data/broadcast.dart';
+import 'package:logger/logger.dart' as leisim;
 import 'package:pubdev_playground/flutter_live_data/log.dart';
-
 import 'life_cycle.dart';
-export 'broadcast.dart';
 
 /// Live Data Structure
 class LiveData<T> implements LifeCycleObservable {
@@ -14,7 +10,7 @@ class LiveData<T> implements LifeCycleObservable {
   T _currentValue;
   LifeCycleObserver? _lifeCycleObserver;
   late StreamController<T> streamController;
-  late Logger logger;
+  late leisim.Logger logger;
   Map<dynamic, dynamic> attachedItems = {};
   List<void Function(LiveData<T> liveData)> apples = [];
 
@@ -23,7 +19,7 @@ class LiveData<T> implements LifeCycleObservable {
     this.name,
     StreamController<T>? streamController,
     LifeCycleObserver? lifeCycleObserver,
-    Logger? logger,
+    leisim.Logger? logger,
   })  : initialValue = initValue,
         _currentValue = initValue {
     this.logger = logger ?? Logger.instance;
@@ -129,7 +125,6 @@ class LiveData<T> implements LifeCycleObservable {
   @override
   void close() {
     streamController.close();
-    // streamController = null;
   }
 
   StreamSubscription<T>? subscribe(

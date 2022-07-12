@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pubdev_playground/flutter_bloc_builder/endpoint.dart';
-import 'package:pubdev_playground/flutter_live_data/core.dart';
 import 'package:pubdev_playground/ui/components.dart';
+// import 'package:pubdev_playground/flutter_bloc_builder/endpoint.dart';
+// import 'package:pubdev_playground/flutter_live_data/core.dart';
+import 'package:bloc_builder/bloc_builder.dart';
+import 'package:flutter_live_data/flutter_live_data.dart';
 
 class ExampleWatch1Page extends StatefulWidget {
   const ExampleWatch1Page({
@@ -28,24 +30,21 @@ class _ExampleWatch1PageState extends State<ExampleWatch1Page> {
             // mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               const Text('Counter is'),
-              $watch(
-                counter,
-                build: (_, int count) {
-                  return Blink.on(
-                    child: Column(
-                      children: [
-                        Text(
-                          '$count',
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                        Text(
-                          '${DateTime.now()}',
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+              $watch(counter, build: (_, int count) {
+                return Blink.on(
+                  child: Column(
+                    children: [
+                      Text(
+                        '$count',
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                      Text(
+                        '${DateTime.now()}',
+                      ),
+                    ],
+                  ),
+                );
+              }),
               ElevatedButton(
                 onPressed: () {
                   counter.value = counter.value + 1;

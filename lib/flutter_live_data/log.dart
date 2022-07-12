@@ -1,14 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:logger/logger.dart' as leisim;
 
-abstract class Log {
-  void d(msg);
-
-  void i(msg);
-
-  void e(msg);
-}
-
-class Logger implements Log {
+class Logger implements leisim.Logger {
   static Logger? _instance;
 
   static Logger get instance {
@@ -21,23 +14,48 @@ class Logger implements Log {
   }
 
   @override
-  void d(msg) {
+  void close() {
+    // TODO: implement close
+  }
+
+  @override
+  void d(message, [error, StackTrace? stackTrace]) {
     if (kDebugMode) {
-      print('\x1B[34m[LIVEDATA]\x1B[0m :: $msg');
+      print('\x1B[34m[LIVEDATA]\x1B[0m :: $message');
     }
   }
 
   @override
-  void i(msg) {
+  void e(message, [error, StackTrace? stackTrace]) {
     if (kDebugMode) {
-      print('\x1B[34m[LIVEDATA]\x1B[0m :: $msg');
+      print('\x1B[31m[LIVEDATA]\x1B[0m :: $message');
     }
   }
 
   @override
-  void e(msg) {
+  void i(message, [error, StackTrace? stackTrace]) {
     if (kDebugMode) {
-      print('\x1B[31m[LIVEDATA]\x1B[0m :: $msg');
+      print('\x1B[34m[LIVEDATA]\x1B[0m :: $message');
     }
+  }
+
+  @override
+  void log(leisim.Level level, message, [error, StackTrace? stackTrace]) {
+    // TODO: implement log
+  }
+
+  @override
+  void v(message, [error, StackTrace? stackTrace]) {
+    // TODO: implement v
+  }
+
+  @override
+  void w(message, [error, StackTrace? stackTrace]) {
+    // TODO: implement w
+  }
+
+  @override
+  void wtf(message, [error, StackTrace? stackTrace]) {
+    // TODO: implement wtf
   }
 }

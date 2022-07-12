@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.2"
+  bloc_builder:
+    dependency: "direct main"
+    description:
+      name: bloc_builder
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -69,6 +76,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  flutter_live_data:
+    dependency: "direct main"
+    description:
+      name: flutter_live_data
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -81,6 +95,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  logger:
+    dependency: "direct main"
+    description:
+      name: logger
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   matcher:
     dependency: transitive
     description:

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pubdev_playground/flutter_bloc_builder/endpoint.dart';
-import 'package:pubdev_playground/flutter_live_data/core.dart';
 import 'package:pubdev_playground/ui/components.dart';
+// import 'package:pubdev_playground/flutter_bloc_builder/endpoint.dart';
+// import 'package:pubdev_playground/flutter_live_data/core.dart';
+import 'package:bloc_builder/bloc_builder.dart';
+import 'package:flutter_live_data/flutter_live_data.dart';
 
 class ExampleWhen1Page extends StatefulWidget {
   const ExampleWhen1Page({
@@ -45,6 +47,23 @@ class _ExampleWhen1PageState extends State<ExampleWhen1Page> {
                   ),
                 ],
               ),
+              $when(counter) |
+                  $case(
+                    (int value) => value % 2 == 0,
+                    build: (_, int value) {
+                      return Blink(
+                        key: UniqueKey(),
+                        child: Text('[case 1] $value is Even.'),
+                      );
+                    },
+                  ) |
+                  $else(
+                    build: (_, int value) {
+                      return Blink.on(
+                        child: Text('[else] just $value'),
+                      );
+                    },
+                  ),
               $when(counter)
                 ..$case(
                   (int value) => value % 2 == 0,
