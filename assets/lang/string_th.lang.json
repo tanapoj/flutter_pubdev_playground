@@ -1,0 +1,17 @@
+{
+  "home_page": {
+    "title": "เดโม่",
+    "menu_setting": "ตั้งค่า"
+  },
+  "setting_page": {
+    "title": "หน้าตั้งค่า",
+    "locale_en": "อังกฤษ",
+    "locale_th": "ไทย"
+  },
+  "hello": "สวัสดี $name",
+  "save": "บันทึก",
+  "login": {
+    "success": "ล็อกอินสำเร็จ",
+    "fail": "ล็อกอินไม่สำเร็จ"
+  }
+}

@@ -1,0 +1,31 @@
+import 'package:flutter/widgets.dart';
+import '../base_bLoc_widget.dart';
+import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
+
+class WatchBLoCWidget<T> extends BaseBLoCWidget {
+  final LiveData<T>? liveData;
+  final Widget Function(BuildContext context, T value) builder;
+
+  const WatchBLoCWidget({
+    Key? key,
+    this.liveData,
+    required this.builder,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (liveData == null) return EmptyWidget(key: key);
+    return StreamBuilder<T>(
+      key: key,
+      stream: liveData!.stream,
+      initialData: liveData!.initialValue,
+      builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
+        var value = liveData!.value ?? snapshot.data ?? liveData!.initialValue;
+        return builder(context, value);
+      },
+    );
+  }
+
+  @override
+  operator |(BaseBLoCWidget next) => this;
+}
