@@ -5,7 +5,7 @@ import 'widgets/watch_bloc_widget.dart';
 import 'widgets/when_bloc_widget.dart';
 import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
 
-import 'base_bLoc_widget.dart';
+import 'base_widget.dart';
 
 WatchBLoCWidget $watch<T>(
   LiveData<T>? lv, {

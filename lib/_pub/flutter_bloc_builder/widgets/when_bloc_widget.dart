@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
-import '../base_bLoc_widget.dart';
+import '../base_widget.dart';
 import '../endpoint.dart' as endpoint;
 import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
 
