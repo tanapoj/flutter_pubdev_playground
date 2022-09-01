@@ -36,7 +36,7 @@ class MyBloc2Page extends ComponentLogic {
     }).startNow();
 
     translator;
-    String s = tt.login.success;
+    String s = tt.home_page.title;
     var h1 = ui.text.size.header1;
   }
 

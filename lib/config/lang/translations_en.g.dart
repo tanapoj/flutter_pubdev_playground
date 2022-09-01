@@ -17,9 +17,6 @@ class TranslationsEn implements BaseTranslations {
 	// Translations
 	late final TranslationsHomePageEn home_page = TranslationsHomePageEn._(_root);
 	late final TranslationsSettingPageEn setting_page = TranslationsSettingPageEn._(_root);
-	String get hello => 'Hello \$name';
-	String get save => 'Save';
-	late final TranslationsLoginEn login = TranslationsLoginEn._(_root);
 }
 
 // Path: home_page
@@ -43,15 +40,4 @@ class TranslationsSettingPageEn {
 	String get title => 'Setting';
 	String get locale_en => 'English';
 	String get locale_th => 'Thai';
-}
-
-// Path: login
-class TranslationsLoginEn {
-	TranslationsLoginEn._(this._root);
-
-	final TranslationsEn _root; // ignore: unused_field
-
-	// Translations
-	String get success => 'Logged in successfully';
-	String get fail => 'Logged in failed';
 }

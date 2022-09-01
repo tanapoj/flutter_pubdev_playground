@@ -18,9 +18,6 @@ class TranslationsTh extends TranslationsEn {
 	// Translations
 	@override late final TranslationsHomePageTh home_page = TranslationsHomePageTh._(_root);
 	@override late final TranslationsSettingPageTh setting_page = TranslationsSettingPageTh._(_root);
-	@override String get hello => 'สวัสดี \$name';
-	@override String get save => 'บันทึก';
-	@override late final TranslationsLoginTh login = TranslationsLoginTh._(_root);
 }
 
 // Path: home_page
@@ -44,15 +41,4 @@ class TranslationsSettingPageTh extends TranslationsSettingPageEn {
 	@override String get title => 'หน้าตั้งค่า';
 	@override String get locale_en => 'อังกฤษ';
 	@override String get locale_th => 'ไทย';
-}
-
-// Path: login
-class TranslationsLoginTh extends TranslationsLoginEn {
-	TranslationsLoginTh._(TranslationsTh root) : this._root = root, super._(root);
-
-	@override final TranslationsTh _root; // ignore: unused_field
-
-	// Translations
-	@override String get success => 'ล็อกอินสำเร็จ';
-	@override String get fail => 'ล็อกอินไม่สำเร็จ';
 }
