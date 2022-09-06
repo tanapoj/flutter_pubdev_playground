@@ -1,21 +1,41 @@
 import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
 import 'package:pubdev_playground/config/lang/translations.g.dart';
+import 'package:pubdev_playground/data/preference/framework_preference.dart';
 
 class _AppTranslations extends TranslationsEn {
   _AppTranslations() : super.build();
 }
 
 class AppTranslator extends _AppTranslations {
+  final FrameworkPreference _pref = FrameworkPreference();
+
   AppTranslator() : super();
 
   AppLocale _locale = AppLocale.en;
 
   AppLocale get locale => _locale;
 
-  LiveData<AppLocale> $state = LiveData(AppLocale.en);
+  LiveDataSource<AppLocale> $state = LiveDataSource(
+    AppLocale.en,
+    dataSourceInterface: null,
+  );
+
+  init() async {
+    setLocale(await _pref.getAppLocale());
+    $state.dataSourceInterface = createDataSourceInterface<AppLocale>(
+      loadValueAction: null,
+      onValueUpdatedAction: (AppLocale value, bool hasChange) async {
+        _pref.setAppLocale(value);
+      },
+    );
+  }
 
   isEn() {
     return _locale == AppLocale.en;
+  }
+
+  setLocale(AppLocale locale) {
+    _locale = locale;
   }
 
   switchLocale(AppLocale locale) {

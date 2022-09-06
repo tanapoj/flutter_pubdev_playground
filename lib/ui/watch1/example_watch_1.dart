@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pubdev_playground/ui/widgets.dart';
-// import 'package:pubdev_playground/flutter_bloc_builder/endpoint.dart';
-// import 'package:pubdev_playground/flutter_live_data/live_data.dart';
-import 'package:bloc_builder/bloc_builder.dart';
-import 'package:flutter_live_data/flutter_live_data.dart';
+import 'package:pubdev_playground/_pub/flutter_bloc_builder/index.dart';
+import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
 
 class ExampleWatch1Page extends StatefulWidget {
   const ExampleWatch1Page({

@@ -11,9 +11,7 @@ class AppProvider extends m.InheritedWidget {
   AppNavigator navigator = AppNavigator();
   AppTranslator translator = AppTranslator();
   AppUi ui = AppUi();
-  AppAuth appAuth = AppAuth();
-
-  m.Color color = m.Colors.green;
+  AppAuth auth = AppAuth();
 
   AppProvider({
     m.Key? key,
@@ -28,7 +26,15 @@ class AppProvider extends m.InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(AppProvider old) => color != old.color;
+  bool updateShouldNotify(AppProvider old) =>
+      env != old.env && navigator != old.navigator && translator != old.translator && ui != old.ui && auth != old.auth;
+
+  init() {
+    navigator.init();
+    translator.init();
+    ui.init();
+    auth.init();
+  }
 }
 
 // class AppBlocDependencies {

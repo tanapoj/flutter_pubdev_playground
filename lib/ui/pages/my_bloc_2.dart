@@ -130,9 +130,6 @@ class MyBloc2View extends ComponentView<MyBloc2Page> {
 
   @override
   Widget build(BuildContext context) {
-    // appLog.d('view 2 build ------> ${context.dependOnInheritedWidgetOfExactType<AppNavigator>()?.color}');
-    appLog.d('view 2 build ------> ${AppProvider.of(context).color.toString()}');
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('BlocView2'),

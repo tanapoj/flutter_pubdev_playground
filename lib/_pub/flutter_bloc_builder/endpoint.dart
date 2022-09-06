@@ -82,21 +82,17 @@ class GuardBuilder<T> extends MatchBLoCWidget<T> {
 ForBLoCWidget<T> $for<T>(
   LiveData<List<T>> lv, {
   Key? key,
-  Widget Function(
-    BuildContext context,
-    List<Widget> list,
-  )?
-      buildList,
+  Widget Function(BuildContext context, List<ItemViewHolder<T>> list)? buildList,
   Widget Function(BuildContext context, T value, int index)? buildItem,
   Widget Function(BuildContext context, List<T> list)? buildEmpty,
 }) {
   buildList ??= (
     BuildContext _context,
-    List<Widget> widgets,
+    List<ItemViewHolder<T>> items,
   ) {
     return ListView.builder(
-      itemCount: widgets.length,
-      itemBuilder: (context, i) => widgets[i],
+      itemCount: items.length,
+      itemBuilder: (context, i) => items[i].widget,
     );
   };
 

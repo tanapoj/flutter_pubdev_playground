@@ -46,7 +46,6 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 title: Text(
                   'Bloc Component 1 ${context == innerContext}',
-                  style: TextStyle(color: AppProvider.of(innerContext).color),
                 ),
                 trailing: const Icon(Icons.keyboard_arrow_right_sharp),
                 onTap: () {

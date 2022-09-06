@@ -2,18 +2,26 @@ import 'dart:async';
 import 'live_data.dart';
 
 class LiveDataSource<T> extends LiveData<T> {
-  final DataSourceInterface dataSourceInterface;
+  DataSourceInterface? _dataSourceInterface;
 
   LiveDataSource(
     super.initValue, {
-    required this.dataSourceInterface,
+    DataSourceInterface? dataSourceInterface,
   }) {
     _init();
   }
 
   _init() async {
-    T initValue = await dataSourceInterface.loadValue();
-    value = initValue;
+    if (_dataSourceInterface != null) {
+      T initValue = await _dataSourceInterface!.loadValue();
+      if (initValue != null) {
+        value = initValue;
+      }
+    }
+  }
+
+  set dataSourceInterface(DataSourceInterface dataSourceInterface) {
+    _dataSourceInterface = dataSourceInterface;
   }
 
   @override
@@ -24,19 +32,19 @@ class LiveDataSource<T> extends LiveData<T> {
   setValueAsync(T value) async {
     bool hasChange = super.value != value;
     super.value = value;
-    await dataSourceInterface.onValueUpdated(value, hasChange);
+    await _dataSourceInterface?.onValueUpdated(value, hasChange);
   }
 }
 
 abstract class DataSourceInterface<T> {
   Future<void> onValueUpdated(T value, bool hasChange);
 
-  Future<T> loadValue();
+  Future<T?> loadValue();
 }
 
 DataSourceInterface<T> createDataSourceInterface<T>({
-  required Future<T> Function() loadValueAction,
-  required Future<void> Function(T value, bool hasChange) onValueUpdatedAction,
+  Future<T> Function()? loadValueAction,
+  Future<void> Function(T value, bool hasChange)? onValueUpdatedAction,
 }) {
   return _DataSourceInterface<T>(
     loadValueAction: loadValueAction,
@@ -45,21 +53,21 @@ DataSourceInterface<T> createDataSourceInterface<T>({
 }
 
 class _DataSourceInterface<T> extends DataSourceInterface<T> {
-  Future<T> Function() loadValueAction;
-  Future<void> Function(T value, bool hasChange) onValueUpdatedAction;
+  Future<T> Function()? loadValueAction;
+  Future<void> Function(T value, bool hasChange)? onValueUpdatedAction;
 
   _DataSourceInterface({
-    required this.loadValueAction,
-    required this.onValueUpdatedAction,
+    this.loadValueAction,
+    this.onValueUpdatedAction,
   });
 
   @override
-  Future<T> loadValue() async {
-    return await loadValueAction();
+  Future<T?> loadValue() async {
+    return await loadValueAction?.call();
   }
 
   @override
   Future<void> onValueUpdated(T value, bool hasChange) async {
-    await onValueUpdatedAction(value, hasChange);
+    await onValueUpdatedAction?.call(value, hasChange);
   }
 }

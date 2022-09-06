@@ -3,10 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pubdev_playground/helper.dart';
 import 'package:pubdev_playground/ui/widgets.dart';
-// import 'package:pubdev_playground/flutter_bloc_builder/endpoint.dart';
-// import 'package:pubdev_playground/flutter_live_data/live_data.dart';
-import 'package:bloc_builder/bloc_builder.dart';
-import 'package:flutter_live_data/flutter_live_data.dart';
+import 'package:pubdev_playground/_pub/flutter_bloc_builder/index.dart';
+import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
 
 class ExampleList4Page extends StatefulWidget {
   const ExampleList4Page({
@@ -51,10 +49,10 @@ class _ExampleList4PageState extends State<ExampleList4Page> {
       ),
       body: $for(
         items,
-        buildList: (_, widgets) {
+        buildList: (_, items1) {
           return AnimatedList(
             key: _animatedKey,
-            initialItemCount: widgets.length,
+            initialItemCount: items1.length,
             padding: const EdgeInsets.all(4),
             itemBuilder: (_, i, animation) {
               return SizeTransition(
@@ -68,7 +66,7 @@ class _ExampleList4PageState extends State<ExampleList4Page> {
                       children: [
                         Row(
                           children: [
-                            widgets[i],
+                            items1[i].widget,
                             GestureDetector(
                               child: const Padding(
                                 padding: EdgeInsets.all(4.0),

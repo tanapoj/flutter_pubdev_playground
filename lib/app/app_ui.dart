@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart' as m;
 
 class AppUi {
+  init() {}
+
   m.ThemeData get themeData {
     return m.ThemeData(
       primarySwatch: m.Colors.green,

@@ -28,6 +28,7 @@ class _StartupPageState extends State<StartupPage> {
       );
     });
     return Scaffold(
+      backgroundColor: Colors.green,
       body: Builder(
         builder: (innerContext) {
           return const Center(

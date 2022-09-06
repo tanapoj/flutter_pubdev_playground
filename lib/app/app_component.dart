@@ -65,7 +65,7 @@ abstract class ComponentLogic extends mvvm.ComponentLogic {
       appLog.e('context is null');
       throw Exception();
     }
-    return AppProvider.of(context!).appAuth;
+    return AppProvider.of(context!).auth;
   }
 
   String _logDecorate(String message) => appLog.magenta(message);

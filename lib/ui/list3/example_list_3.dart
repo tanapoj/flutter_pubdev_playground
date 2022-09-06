@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pubdev_playground/ui/widgets.dart';
-// import 'package:pubdev_playground/flutter_bloc_builder/endpoint.dart';
-// import 'package:pubdev_playground/flutter_live_data/live_data.dart';
-import 'package:bloc_builder/bloc_builder.dart';
-import 'package:flutter_live_data/flutter_live_data.dart';
+import 'package:pubdev_playground/_pub/flutter_bloc_builder/index.dart';
+import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
 
 class ExampleList3Page extends StatefulWidget {
   const ExampleList3Page({
@@ -290,12 +288,12 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
           ),
           $for(
             continentListLv,
-            buildList: (_, widgets) {
+            buildList: (_, items) {
               return Expanded(
                 child: Blink.on(
                   child: ListView.builder(
-                    itemCount: widgets.length,
-                    itemBuilder: (_, int i) => widgets[i],
+                    itemCount: items.length,
+                    itemBuilder: (_, int i) => items[i].widget,
                   ),
                 ),
               );
@@ -314,12 +312,12 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
                   ),
                   $for(
                     countriesLv,
-                    buildList: (_, widgets2) {
+                    buildList: (_, items2) {
                       return ListView.builder(
                         shrinkWrap: true,
                         physics: const ClampingScrollPhysics(),
-                        itemCount: widgets2.length,
-                        itemBuilder: (_, int i) => widgets2[i],
+                        itemCount: items2.length,
+                        itemBuilder: (_, int i) => items2[i].widget,
                       );
                     },
                     buildItem: (_, Country country, index2) {

@@ -48,7 +48,7 @@ class Logger implements leisim.Logger {
 
       String stackTrace = stackTraceLine.isNotEmpty ? stackTraceLine[0] : '';
 
-      print('${green('[d]')} ${message.toString().padRight(80)}\t\t\t${green('at: $stackTrace')}');
+      print('${green('[d]')} ${message.toString().padRight(80)}\t${green('at: $stackTrace')}');
     }
   }
 

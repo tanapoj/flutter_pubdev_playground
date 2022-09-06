@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
-Future<void> startup(BuildContext context) {
+import '../common/translate.dart';
+
+Future<void> startup(BuildContext context) async {
   // exec on app startup
   //
+
   // return Future(() => null);
-  return Future.delayed(const Duration(seconds: 3));
+  return Future.delayed(const Duration(seconds: 2));
 }

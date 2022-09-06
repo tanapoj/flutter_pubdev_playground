@@ -5,7 +5,7 @@ import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
 
 class ForBLoCWidget<T> extends BaseBLoCWidget {
   final LiveData<List<T>> liveData;
-  final Widget Function(BuildContext context, List<Widget> widgets) listBuilder;
+  final Widget Function(BuildContext context, List<ItemViewHolder<T>> items) listBuilder;
   final Widget Function(BuildContext context, T value, int index) itemBuilder;
   final Widget Function(BuildContext context, List<T> value) emptyBuilder;
 
@@ -29,16 +29,22 @@ class ForBLoCWidget<T> extends BaseBLoCWidget {
         if (value.isEmpty) {
           return emptyBuilder(context, value);
         }
-        var itemWidgets = value.asMap().entries.map((MapEntry entry) {
+        List<ItemViewHolder<T>> itemWidgets = value.asMap().entries.map((MapEntry entry) {
           int idx = entry.key;
           T item = entry.value;
           var itemLiveData = detach(liveData, item);
           if (itemLiveData != null) {
-            return $watch<T>(itemLiveData, build: (_, value) {
-              return itemBuilder(context, value, idx);
-            });
+            return ItemViewHolder<T>(
+              data: item,
+              widget: $watch<T>(itemLiveData, build: (_, value) {
+                return itemBuilder(context, value, idx);
+              }),
+            );
           } else {
-            return itemBuilder(context, item, idx);
+            return ItemViewHolder<T>(
+              data: item,
+              widget: itemBuilder(context, item, idx),
+            );
           }
         }).toList();
         return listBuilder(context, itemWidgets);
@@ -48,4 +54,14 @@ class ForBLoCWidget<T> extends BaseBLoCWidget {
 
   @override
   operator |(BaseBLoCWidget next) => this;
+}
+
+class ItemViewHolder<T> {
+  final T data;
+  final Widget widget;
+
+  ItemViewHolder({
+    required this.data,
+    required this.widget,
+  });
 }

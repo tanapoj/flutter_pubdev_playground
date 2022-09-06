@@ -28,14 +28,13 @@ class MainApplication extends StatelessWidget {
     return AppProvider(
       env: env,
       child: Builder(builder: (BuildContext context) {
-        var env = AppProvider.of(context).env;
-        var ui = AppProvider.of(context).ui;
-        var nav = AppProvider.of(context).navigator;
+        var provider = AppProvider.of(context);
+        provider.init();
 
         return MaterialApp(
-          title: env.appName,
-          theme: ui.themeData,
-          home: nav.startup(),
+          title: provider.env.appName,
+          theme: provider.ui.themeData,
+          home: provider.navigator.startup(),
         );
       }),
     );

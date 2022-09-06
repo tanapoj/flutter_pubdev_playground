@@ -3,6 +3,8 @@ import 'package:pubdev_playground/ui/main/home.dart';
 import 'package:pubdev_playground/ui/main/startup.dart';
 
 class AppNavigator {
+  init() {}
+
   Widget startup() => StartupPage.builder();
 
   Widget home() => HomePage.builder();
