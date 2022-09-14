@@ -21,7 +21,7 @@ class AppProvider extends AvesProvider {
   late AppAuth auth = AppAuth();
 
   static AppProvider of(BuildContext context) {
-    final AvesProvider? result = context.dependOnInheritedWidgetOfExactType<AvesProvider>();
+    final AvesProvider? result = context.dependOnInheritedWidgetOfExactType<AppProvider>();
     assert(result != null || result is! AppProvider, 'No AppProvider found in context');
     return result! as AppProvider;
   }
