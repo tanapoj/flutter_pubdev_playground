@@ -31,7 +31,7 @@ class MatchBLoCWidget<T> extends BaseBLoCWidget {
         if (mWhen) {
           return builder(context, value);
         }
-        return next?.build(context) ?? const EmptyWidget();
+        return next?.build(context) ?? EmptyWidget(key: key);
       },
     );
   }

@@ -1,13 +1,3 @@
-import 'package:flutter/widgets.dart';
-import 'package:pubdev_playground/ui/main/home.dart';
-import 'package:pubdev_playground/ui/main/startup.dart';
+import 'package:pubdev_playground/_pub/aves/index.dart';
 
-class AppNavigator {
-  init() {}
-
-  Widget startup() => StartupPage.builder();
-
-  Widget home() => HomePage.builder();
-
-  push() {}
-}
+class AppNavigator extends AvesNavigator {}

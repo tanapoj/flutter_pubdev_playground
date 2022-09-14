@@ -1,8 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/widgets.dart';
 import '../base_widget.dart';
-import '../endpoint.dart' as endpoint;
+import '../index.dart' as endpoint;
 import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
 
 // ignore: must_be_immutable

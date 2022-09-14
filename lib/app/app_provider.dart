@@ -1,62 +1,54 @@
-import 'package:flutter/material.dart' as m;
+import 'package:flutter/widgets.dart';
+import 'package:pubdev_playground/_pub/aves/index.dart';
+import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
 import 'package:pubdev_playground/app/app_auth.dart';
 import 'package:pubdev_playground/app/app_navigator.dart';
 import 'package:pubdev_playground/app/app_translator.dart';
 import 'package:pubdev_playground/app/app_ui.dart';
-import 'package:pubdev_playground/app/environment.dart';
 
 // ignore: must_be_immutable
-class AppProvider extends m.InheritedWidget {
-  final Environment env;
-  AppNavigator navigator = AppNavigator();
-  AppTranslator translator = AppTranslator();
-  AppUi ui = AppUi();
-  AppAuth auth = AppAuth();
-
+class AppProvider extends AvesProvider {
   AppProvider({
-    m.Key? key,
-    required m.Widget child,
-    required this.env,
-  }) : super(key: key, child: child);
+    super.key,
+    required super.child,
+    required Environment env,
+  }) : super(env: env);
 
-  static AppProvider of(m.BuildContext context) {
-    final AppProvider? result = context.dependOnInheritedWidgetOfExactType<AppProvider>();
-    assert(result != null, 'No AppProvider found in context');
-    return result!;
+  late final LiveData<AppProvider> $state = LiveData(this);
+  late AppNavigator navigator = AppNavigator();
+  late AppTranslator translator = AppTranslator();
+  late AppUi ui = AppUi(this);
+  late AppAuth auth = AppAuth();
+
+  static AppProvider of(BuildContext context) {
+    final AvesProvider? result = context.dependOnInheritedWidgetOfExactType<AvesProvider>();
+    assert(result != null || result is! AppProvider, 'No AppProvider found in context');
+    return result! as AppProvider;
   }
 
   @override
-  bool updateShouldNotify(AppProvider old) =>
-      env != old.env && navigator != old.navigator && translator != old.translator && ui != old.ui && auth != old.auth;
+  bool updateShouldNotify(AppProvider oldWidget) =>
+      env != oldWidget.env &&
+      navigator != oldWidget.navigator &&
+      translator != oldWidget.translator &&
+      ui != oldWidget.ui &&
+      auth != oldWidget.auth;
 
-  init() {
-    navigator.init();
-    translator.init();
-    ui.init();
-    auth.init();
+  @override
+  primaryInit() {
+    navigator.primaryInit();
+    ui.primaryInit();
+    auth.primaryInit();
+    translator.primaryInit();
+  }
+
+  @override
+  secondaryInit() async {
+    await Future.wait(<Future>[
+      navigator.secondaryInit(),
+      ui.secondaryInit(),
+      auth.secondaryInit(),
+      translator.secondaryInit(),
+    ]);
   }
 }
-
-// class AppBlocDependencies {
-//   AppBlocNavigator? appNavigator;
-//   AppBlocTranslator? appTranslator;
-//   AppBlocUi? appUi;
-// }
-
-// class FrogColor extends InheritedWidget {
-//   const FrogColor({
-//     Key? key,
-//     required Widget child,
-//   }) : super(key: key, child: child);
-//
-//   final Color color = Colors.green;
-//
-//   static FrogColor of(BuildContext context) {
-//     final FrogColor? result = context.dependOnInheritedWidgetOfExactType<FrogColor>();
-//     assert(result != null, 'No FrogColor found in context');
-//     return result!;
-//   }
-//
-//   @override
-//   bool updateShouldNotify(FrogColor old) => color != old.color;
-// }

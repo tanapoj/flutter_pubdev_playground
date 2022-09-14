@@ -18,12 +18,12 @@ class StartupPage extends StatefulWidget {
 class _StartupPageState extends State<StartupPage> {
   @override
   Widget build(BuildContext context) {
-    startup(context).then((_) {
-      var nav = AppProvider.of(context).navigator;
+    startup(context).then((_) async {
+      var provider = AppProvider.of(context);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => nav.home(),
+          builder: (context) => provider.navigator.home(),
         ),
       );
     });

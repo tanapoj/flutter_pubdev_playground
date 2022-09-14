@@ -1,5 +1,3 @@
-import 'package:pubdev_playground/data/api/base/network.dart';
-
 class Result<T> {
   bool _isAlreadyCallOk = false;
   T? _data;
@@ -31,13 +29,13 @@ class Result<T> {
     return Result();
   }
 
-  static Result<E> fromHttpResponse<E>(HttpResponse<E> res) {
-    return Result<E>();
-  }
-
-  static Future<Result<E>> fromHttpResponseAsync<E>(Future<HttpResponse<E>> res) async {
-    return Future.value(Result<E>());
-  }
+// static Result<E> fromHttpResponse<E>(Response<E> res) {
+//   return Result<E>();
+// }
+//
+// static Future<Result<E>> fromHttpResponseAsync<E>(Future<Response<E>> res) async {
+//   return Future.value(Result<E>());
+// }
 }
 
 class Failure {

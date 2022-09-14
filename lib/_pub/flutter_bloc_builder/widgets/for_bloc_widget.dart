@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import '../base_widget.dart';
-import '../endpoint.dart';
+import '../index.dart';
 import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
 
 class ForBLoCWidget<T> extends BaseBLoCWidget {

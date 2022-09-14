@@ -72,6 +72,27 @@ class LiveData<T> implements LifeCycleObservable {
     return _this;
   }
 
+  factory LiveData.stream(
+    T initValue,
+    Stream<T> stream, {
+    String? name,
+    bool verifyDataChange = false,
+    StreamController<T>? streamController,
+    LifeCycleOwner? observeOn,
+    Logger? logger,
+  }) {
+    streamController ??= StreamController<T>.broadcast();
+    streamController.addStream(stream);
+    return LiveData(
+      initValue,
+      name: name,
+      verifyDataChange: verifyDataChange,
+      streamController: streamController,
+      owner: observeOn,
+      logger: logger,
+    );
+  }
+
   LiveData<T> owner(LifeCycleOwner lifeCycleOwner) {
     logger.d('${Logger.tag('[LIVEDATA${name == null ? '' : ': $name'}]')} '
         'subscribe on lifeCycleOwner: $lifeCycleOwner');
@@ -94,16 +115,16 @@ class LiveData<T> implements LifeCycleObservable {
       logger.e('[LIVEDATA${name == null ? '' : ': $name'}] is called after close stream!');
       return;
     }
-    logger.i('${Logger.tag('[LIVEDATA${name == null ? '' : ': $name'}]')} '
-        'set value: $value');
 
     if (verifyDataChange && _currentValue == value) {
       logger.i('${Logger.tag('[LIVEDATA${name == null ? '' : ': $name'}]')} '
-          'value: $value not changed (old value is $_currentValue), do not update LiveData');
+          'value not changed (old:$_currentValue = new:$value), do not update LiveData');
       return;
     }
 
     _currentValue = value;
+    logger.i('${Logger.tag('[LIVEDATA${name == null ? '' : ': $name'}]')} '
+        'set value: $_currentValue --> $value');
 
     if (apples.isNotEmpty) {
       for (var fn in apples) {
@@ -209,7 +230,7 @@ LiveData<C>? detach<P, C>(LiveData<P> parent, C child) {
 }
 
 extension DetachLiveData<P, C> on LiveData<P> {
-  LiveData<C>? detachedBy(C Function(LiveData<P> lv) detacher) {
+  LiveData<C>? detachBy(C Function(LiveData<P> lv) detacher) {
     return detach<P, C>(this, detacher(this));
   }
 

@@ -1,11 +1,7 @@
-import 'package:pubdev_playground/app/app_di.dart';
+import 'package:pubdev_playground/_pub/aves/di.dart';
 
-extension DefaultSetting on AppDi {
-  AppDi withDefaultDependencies() {
-    singletonFactory<int>((c) {
-      return 1234;
-    }, instanceName: 'app-version');
-
-    return this;
-  }
+void setDefaultDependencies(AvesDi di) {
+  di.singletonFactory<int>((c) {
+    return 1;
+  }, instanceName: 'app-version');
 }

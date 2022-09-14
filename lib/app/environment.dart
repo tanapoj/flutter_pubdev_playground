@@ -1,25 +1,31 @@
 import 'package:flutter/widgets.dart';
+import 'package:pubdev_playground/_pub/aves/index.dart' as aves;
 
 @immutable
-class Environment {
+class Environment extends aves.Environment {
+  @override
   String get appName => 'MVVM Demo';
 
-  final int logLevel = 1;
-  final bool isDebugMode = false;
+  @override
+  int get logLevel => 1;
 
+  @override
   bool get isProduction {
-    return !isDebug;
+    return false;
   }
 
+  @override
   bool get isDebug {
-    return isDebugMode;
+    return true;
   }
 
-  final bool isUsingMockApiData = false;
+  bool get isUsingMockApiData => false;
 
-  final bool isLogging = false;
+  bool get isLogging => false;
 
-  final bool isSystemLogging = false;
+  bool get isSystemLogging => false;
 
-  final bool isEnableAds = true;
+  bool get isEnableAds => true;
+
+  String get baseUrl => 'https://test.co';
 }
