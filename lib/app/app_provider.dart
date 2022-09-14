@@ -5,6 +5,7 @@ import 'package:pubdev_playground/app/app_auth.dart';
 import 'package:pubdev_playground/app/app_navigator.dart';
 import 'package:pubdev_playground/app/app_translator.dart';
 import 'package:pubdev_playground/app/app_ui.dart';
+import 'package:pubdev_playground/common/log.dart';
 
 // ignore: must_be_immutable
 class AppProvider extends AvesProvider {
@@ -44,11 +45,13 @@ class AppProvider extends AvesProvider {
 
   @override
   secondaryInit() async {
+    appLog.d('AppProvider.secondaryInit() 1');
     await Future.wait(<Future>[
       navigator.secondaryInit(),
       ui.secondaryInit(),
       auth.secondaryInit(),
       translator.secondaryInit(),
     ]);
+    appLog.d('AppProvider.secondaryInit() 2');
   }
 }

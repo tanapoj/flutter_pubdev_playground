@@ -5,7 +5,9 @@ import 'package:pubdev_playground/models/user.dart';
 class AvesAuth {
   primaryInit() {}
 
-  secondaryInit() async {}
+  secondaryInit() async {
+    return Future.value(null);
+  }
 
   bool get isLogin => user != null || user is GuestUser;
 

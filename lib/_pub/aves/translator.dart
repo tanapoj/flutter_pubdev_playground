@@ -30,6 +30,7 @@ class AvesTranslator extends _AvesTranslations {
         _pref.setAppLocale(value);
       },
     );
+    return Future.value(null);
   }
 
   setLocale(AppLocale locale) {

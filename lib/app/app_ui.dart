@@ -21,7 +21,7 @@ class AppUi extends AvesUi {
   }
 
   AppTheme get theme {
-    return AppTheme();
+    return $state.value;
   }
 
   AppStyle get style {

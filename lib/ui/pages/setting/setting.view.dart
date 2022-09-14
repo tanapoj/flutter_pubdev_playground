@@ -24,8 +24,8 @@ class SettingView extends app.ComponentView<SettingPage> {
   }
 
   Widget body() {
-    appLog.w('test StackTrace');
-    appLog.e('test StackTrace');
+    // appLog.w('test StackTrace');
+    // appLog.e('test StackTrace');
     var cur = '${DateTime.now()}';
     AppLocale currentLocale = logic.translator.locale;
     return ListView(

@@ -5,7 +5,9 @@ import 'package:pubdev_playground/ui/main/startup.dart';
 class AvesNavigator {
   primaryInit() {}
 
-  secondaryInit() async {}
+  secondaryInit() async {
+    return Future.value(null);
+  }
 
   Widget startup() => StartupPage.builder();
 

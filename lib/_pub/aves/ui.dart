@@ -1,5 +1,7 @@
 class AvesUi {
   primaryInit() {}
 
-  secondaryInit() async {}
+  secondaryInit() async {
+    return Future.value(null);
+  }
 }

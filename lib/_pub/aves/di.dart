@@ -39,7 +39,7 @@ class Di {
 
   Di._internal();
 
-  late AvesDi container;
+  late AvesDi container = AvesDi();
 }
 
 extension DefaultSetting on AvesDi {

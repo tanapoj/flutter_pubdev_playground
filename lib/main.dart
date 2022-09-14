@@ -33,7 +33,7 @@ class MainApplication extends StatelessWidget {
           provider.primaryInit();
           return $watch(
             provider.$state,
-            build: (context, value) {
+            build: (context, _) {
               return MaterialApp(
                 title: provider.env.appName,
                 theme: provider.ui.theme.themeData,
