@@ -1,22 +1,42 @@
 import 'package:flutter/material.dart' as m;
-import 'package:pubdev_playground/_pub/aves/ui.dart';
-import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
+import 'package:pubdev_playground/_pub/aves/architecture/ui.dart';
+import 'package:flutter_live_data/index.dart';
 import 'package:pubdev_playground/app/app_provider.dart';
+import 'package:pubdev_playground/data/preferences/framework_preference.dart';
 
 class AppUi extends AvesUi {
-  late final LiveData<AppTheme> $state = LiveData(AppTheme());
+  final FrameworkPreference _pref = FrameworkPreference();
+  late final LiveDataSource<AppTheme> $state = LiveDataSource(
+    AppTheme(),
+    verifyDataChange: true,
+  );
 
-  AppUi(AppProvider provider) {
+  AppUi(App provider) {
     $state.listen((value) {
       provider.$state.tick();
     });
   }
 
-  setTheme1() {
+  @override
+  asyncInit() async {
+    setTheme(await _pref.getAppTheme());
+    $state.dataSourceInterface = createDataSourceInterface<AppTheme>(
+      loadValueAction: null,
+      onValueUpdatedAction: (AppTheme value, bool hasChange) async {
+        _pref.setAppTheme(value);
+      },
+    );
+  }
+
+  setTheme(AppTheme theme) {
+    $state.value = theme;
+  }
+
+  useTheme1() {
     $state.value = AppTheme();
   }
 
-  setTheme2() {
+  useTheme2() {
     $state.value = AppTheme2();
   }
 
@@ -27,6 +47,15 @@ class AppUi extends AvesUi {
   AppStyle get style {
     return AppStyle();
   }
+
+  bool get isUsingTheme1 => !isUsingTheme2;
+
+  bool get isUsingTheme2 => $state.value is AppTheme2;
+
+  @override
+  String toString() {
+    return 'AppUi{${$state}}';
+  }
 }
 
 class AppTheme {
@@ -34,6 +63,11 @@ class AppTheme {
     return m.ThemeData(
       primarySwatch: m.Colors.green,
     );
+  }
+
+  @override
+  String toString() {
+    return 'AppTheme{light theme}';
   }
 }
 
@@ -43,6 +77,11 @@ class AppTheme2 extends AppTheme {
     return m.ThemeData(
       primarySwatch: m.Colors.purple,
     );
+  }
+
+  @override
+  String toString() {
+    return 'AppTheme{dark theme}';
   }
 }
 
@@ -56,6 +95,12 @@ class AppStyle {
 
 class _Text {
   final _TextSize size = _TextSize();
+  final m.TextStyle textStyle1 = const m.TextStyle(
+    color: m.Colors.green,
+  );
+  final m.TextStyle textStyle2 = const m.TextStyle(
+    color: m.Colors.cyan,
+  );
 }
 
 class _TextSize {

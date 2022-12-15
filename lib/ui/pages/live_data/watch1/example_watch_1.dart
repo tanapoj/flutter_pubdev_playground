@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pubdev_playground/common/log.dart';
 import 'package:pubdev_playground/ui/widgets/blink.dart';
-import 'package:pubdev_playground/_pub/flutter_bloc_builder/index.dart';
-import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
+import 'package:bloc_builder/index.dart';
+import 'package:flutter_live_data/index.dart';
 
 class ExampleWatch1Page extends StatefulWidget {
   const ExampleWatch1Page({
@@ -80,7 +80,7 @@ class _ExampleWatch1PageState extends State<ExampleWatch1Page> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  counter.mutate((val) => val += 1);
+                  counter.patch((val) => val += 1);
                 },
                 child: Row(
                   children: const [

@@ -17,6 +17,7 @@ class TranslationsTh extends TranslationsEn {
 
 	// Translations
 	@override late final TranslationsHomePageTh home_page = TranslationsHomePageTh._(_root);
+	@override late final TranslationsTabPageTh tab_page = TranslationsTabPageTh._(_root);
 	@override late final TranslationsSettingPageTh setting_page = TranslationsSettingPageTh._(_root);
 }
 
@@ -29,6 +30,20 @@ class TranslationsHomePageTh extends TranslationsHomePageEn {
 	// Translations
 	@override String get title => 'เดโม่';
 	@override String get menu_setting => 'ตั้งค่า';
+	@override String get tab_setting => 'แท็บ';
+}
+
+// Path: tab_page
+class TranslationsTabPageTh extends TranslationsTabPageEn {
+	TranslationsTabPageTh._(TranslationsTh root) : this._root = root, super._(root);
+
+	@override final TranslationsTh _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'แท็บ';
+	@override String get tab_title_first => 'หนึ่ง';
+	@override String get tab_title_second => 'สอง';
+	@override String get tab_title_setting => 'ตั้งค่า';
 }
 
 // Path: setting_page
@@ -41,4 +56,6 @@ class TranslationsSettingPageTh extends TranslationsSettingPageEn {
 	@override String get title => 'หน้าตั้งค่า';
 	@override String get locale_en => 'อังกฤษ';
 	@override String get locale_th => 'ไทย';
+	@override String get theme_1 => 'ธีม ๑';
+	@override String get theme_2 => 'ธีม ๒';
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart' as leisim;
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:pubdev_playground/_pub/aves/common/syslog.dart';
 
-Logger avesLog = Logger.instance;
+Logger avesLog = SysLogger.instance;
 
 class Logger implements leisim.Logger {
   leisim.Level level = leisim.Level.debug;
@@ -31,7 +32,17 @@ class Logger implements leisim.Logger {
   @override
   void v(message, [error, StackTrace? stackTrace]) {
     if (level.index >= leisim.Level.verbose.index && kDebugMode) {
-      print('${black('[v]')} $message');
+      List<String> stackTraceLine = '${StackTrace.current}'
+          .split('\n')
+          .where((line) => line.length > 2)
+          .map((line) => line.substring(1).replaceAll(RegExp(r'^([0-9])+'), '').trim())
+          .takeWhile((line) => !line.contains('package:flutter'))
+          .skip(1)
+          .toList();
+
+      String stackTrace = stackTraceLine.isNotEmpty ? stackTraceLine[0] : '';
+
+      print('${black('[v]')} ${message.toString()} ${black('<-- at: $stackTrace')}');
     }
   }
 
@@ -48,15 +59,19 @@ class Logger implements leisim.Logger {
 
       String stackTrace = stackTraceLine.isNotEmpty ? stackTraceLine[0] : '';
 
-      print('${green('[d]')} ${message.toString().padRight(80)}\t${green('at: $stackTrace')}');
+      // print('${green('🧪')} ${message.toString()}'
+      //     '\n'
+      //     '   ${green('└──── at: $stackTrace')}');
+
+      print('${green('🧪')} ${message.toString()} ${green('<-- at: $stackTrace')}');
     }
   }
 
   @override
   void i(message, [error, StackTrace? stackTrace]) {
-    if (level.index >= leisim.Level.info.index && kDebugMode) {
-      print('${green('[i]')} $message');
-    }
+    // if (level.index >= leisim.Level.info.index && kDebugMode) {
+    print('${blue('[ℹ]')} $message');
+    // }
   }
 
   @override

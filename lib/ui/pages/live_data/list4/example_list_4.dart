@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pubdev_playground/helper.dart';
 import 'package:pubdev_playground/ui/widgets/blink.dart';
-import 'package:pubdev_playground/_pub/flutter_bloc_builder/index.dart';
-import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
+import 'package:bloc_builder/index.dart';
+import 'package:flutter_live_data/index.dart';
 
 class ExampleList4Page extends StatefulWidget {
   const ExampleList4Page({
@@ -80,7 +80,7 @@ class _ExampleList4PageState extends State<ExampleList4Page> {
                               ),
                               onTap: () {
                                 var lv = detach(items, items.value[i]);
-                                lv?.mutate((counter) {
+                                lv?.patch((counter) {
                                   counter.count++;
                                 });
                               },

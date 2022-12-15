@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pubdev_playground/_pub/flutter_bloc_builder/index.dart';
+import 'package:bloc_builder/index.dart';
 import 'package:pubdev_playground/common/live_data.dart';
 import 'package:pubdev_playground/ui/pages/api_1/api_1.logic.dart';
 import 'package:pubdev_playground/ui/pages/my_bloc_1/my_bloc_1.logic.dart';
@@ -41,17 +41,17 @@ class ApiView1Page extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (c) => MyBloc1Page.create('Test 2'),
+                    builder: (c) => MyBloc1Page.build('Test 2'),
                   ),
                 );
               },
             ),
-            $state(
-              page.state,
-              child: (context, data) => None(),
+            $scene(
+              page.scene,
+              child: (context, int? data) => None(),
               onEmptyData: (context) => None(),
-              onLoading: (context, loading) => None(),
-              onError: (context, error) => None(),
+              onLoading: (context, int? loading) => None(),
+              onError: (context, int? error) => None(),
             ),
           ],
         ),

@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:pubdev_playground/_pub/flutter_bloc_builder/index.dart';
-import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
+import 'package:bloc_builder/index.dart';
+import 'package:flutter_live_data/index.dart';
 import 'package:pubdev_playground/ui/widgets/blink.dart';
 
 class ExampleGuard1Page extends StatefulWidget {

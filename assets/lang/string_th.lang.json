@@ -1,11 +1,20 @@
 {
   "home_page": {
     "title": "เดโม่",
-    "menu_setting": "ตั้งค่า"
+    "menu_setting": "ตั้งค่า",
+    "tab_setting": "แท็บ"
+  },
+  "tab_page": {
+    "title": "แท็บ",
+    "tab_title_first": "หนึ่ง",
+    "tab_title_second": "สอง",
+    "tab_title_setting": "ตั้งค่า"
   },
   "setting_page": {
     "title": "หน้าตั้งค่า",
     "locale_en": "อังกฤษ",
-    "locale_th": "ไทย"
+    "locale_th": "ไทย",
+    "theme_1": "ธีม ๑",
+    "theme_2": "ธีม ๒"
   }
 }

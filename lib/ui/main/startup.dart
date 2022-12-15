@@ -19,7 +19,7 @@ class _StartupPageState extends State<StartupPage> {
   @override
   Widget build(BuildContext context) {
     startup(context).then((_) async {
-      var provider = AppProvider.of(context);
+      var provider = App.of(context);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -27,6 +27,10 @@ class _StartupPageState extends State<StartupPage> {
         ),
       );
     });
+    return splashScreen(context);
+  }
+
+  Widget splashScreen(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.green,
       body: Builder(

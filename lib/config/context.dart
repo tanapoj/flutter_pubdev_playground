@@ -1,21 +1,27 @@
-import 'package:pubdev_playground/_pub/aves/context.dart';
+import 'package:pubdev_playground/_pub/aves/architecture/context.dart';
 import 'package:pubdev_playground/_pub/aves/data/networks/network.dart';
 import 'package:pubdev_playground/app/index.dart';
-import 'package:pubdev_playground/models/user.dart';
+import 'package:pubdev_playground/model/user.dart';
 
-class Ctx extends AvesCtx {
+class FlowContext extends AvesContext {
   final User? user;
   final Environment? env;
 
-  Ctx({
+  FlowContext({
     this.user,
     this.env,
   });
 
-  @override
-  Ctx operator +(Ctx next) {
-    if (next is! Ctx) return this;
-    return Ctx(
+  factory FlowContext.from(FlowContext? ctx) {
+    return FlowContext(
+      user: ctx?.user,
+      env: ctx?.env,
+    );
+  }
+
+  FlowContext operator +(FlowContext next) {
+    if (next is! FlowContext) return this;
+    return FlowContext(
       user: user ?? next.user,
       env: env ?? next.env,
     );
@@ -42,8 +48,8 @@ class Ctx extends AvesCtx {
 }
 
 class Performable {
-  final bool Function(Ctx ctx) when;
-  final void Function(Ctx ctx) action;
+  final bool Function(FlowContext ctx) when;
+  final void Function(FlowContext ctx) action;
 
   Performable({
     required this.when,

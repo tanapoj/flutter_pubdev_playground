@@ -1,14 +1,14 @@
+import 'package:bloc_builder/index.dart';
 import 'package:flutter/material.dart';
-import 'package:pubdev_playground/_pub/flutter_bloc_builder/index.dart';
 import 'package:pubdev_playground/ui/pages/my_bloc_1/my_bloc_1.logic.dart';
 
 class MyBlocView1 extends StatelessWidget {
-  final MyBloc1Page $logic;
+  final MyBloc1Page logic;
   final String label;
 
   const MyBlocView1({
     Key? key,
-    required this.$logic,
+    required this.logic,
     required this.label,
   }) : super(key: key);
 
@@ -23,7 +23,7 @@ class MyBlocView1 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(label),
-            $watch($logic.counter, build: (_, count) {
+            $watch(logic.$counter, build: (_, count) {
               return Text(
                 '$count',
                 style: Theme.of(context).textTheme.headline4,
@@ -32,7 +32,7 @@ class MyBlocView1 extends StatelessWidget {
             ElevatedButton(
               child: const Text('+1'),
               onPressed: () {
-                $logic.increment();
+                logic.increment();
               },
             ),
             ElevatedButton(
@@ -40,7 +40,7 @@ class MyBlocView1 extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (c) => MyBloc1Page.create('Test 2'),
+                    builder: (c) => MyBloc1Page.build('Test 2'),
                   ),
                 );
               },

@@ -1,20 +1,20 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:bloc_builder/index.dart';
 import 'package:pubdev_playground/common/log.dart';
-import 'package:pubdev_playground/models/user.dart';
-import 'package:pubdev_playground/_pub/flutter_bloc_builder/index.dart';
+import 'package:pubdev_playground/model/user.dart';
 import 'package:pubdev_playground/app/index.dart' as app;
 import 'package:pubdev_playground/ui/pages/my_bloc_2/my_bloc_2.logic.dart';
 
-class MyBloc2View extends app.ComponentView<MyBloc2Page> {
+class MyBloc2View extends app.View<MyBloc2Page> {
   final String label;
 
   const MyBloc2View(
-    MyBloc2Page logic, {
-    Key? key,
-    required this.label,
-  }) : super(logic, key: key);
+      MyBloc2Page logic, {
+        Key? key,
+        required this.label,
+      }) : super(logic, key: key);
 
   @override
   void onInit() {
@@ -84,7 +84,7 @@ class MyBloc2View extends app.ComponentView<MyBloc2Page> {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (c) => MyBloc2Page.builder('Test 2'),
+                    builder: (c) => MyBloc2Page.build('Test 2'),
                   ),
                 );
               },

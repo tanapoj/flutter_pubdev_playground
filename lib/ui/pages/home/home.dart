@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pubdev_playground/_pub/flutter_bloc_builder/index.dart';
+import 'package:bloc_builder/index.dart';
 import 'package:pubdev_playground/common/translate.dart';
 import 'package:pubdev_playground/app/index.dart';
 import 'package:pubdev_playground/ui/pages/live_data/guard1/example_guard_1.dart';
@@ -9,9 +9,11 @@ import 'package:pubdev_playground/ui/pages/live_data/list3/example_list_3.dart';
 import 'package:pubdev_playground/ui/pages/live_data/list4/example_list_4.dart';
 import 'package:pubdev_playground/ui/pages/live_data/watch1/example_watch_1.dart';
 import 'package:pubdev_playground/ui/pages/live_data/when1/example_when_1.dart';
+import 'package:pubdev_playground/ui/pages/mvvm/mvvm.logic.dart';
 import 'package:pubdev_playground/ui/pages/my_bloc_1/my_bloc_1.logic.dart';
 import 'package:pubdev_playground/ui/pages/my_bloc_2/my_bloc_2.logic.dart';
 import 'package:pubdev_playground/ui/pages/setting/setting.logic.dart';
+import 'package:pubdev_playground/ui/pages/tab_1/tab_1.logic.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -21,7 +23,7 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 
-  factory HomePage.builder() {
+  factory HomePage.build() {
     return const HomePage();
   }
 }
@@ -29,7 +31,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return $watch(AppProvider.of(context).translator.$state, build: (_, AppLocale locale) {
+    return $watch(App.of(context).translator.$state, build: (_, AppLocale locale) {
       return Scaffold(
         appBar: AppBar(
           title: Text(tt.home_page.title),
@@ -52,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MyBloc1Page.create('Test 1'),
+                      builder: (context) => MyBloc1Page.build('Test 1'),
                     ),
                   );
                 },
@@ -64,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     innerContext,
                     MaterialPageRoute(
-                      builder: (context) => MyBloc2Page.builder('Test 2'),
+                      builder: (context) => MyBloc2Page.build('Test 2'),
                     ),
                   );
                 },
@@ -154,13 +156,37 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               ListTile(
+                title: Text(tt.home_page.tab_setting),
+                trailing: const Icon(Icons.keyboard_arrow_right_sharp),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Tab1Page.build(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
                 title: Text(tt.home_page.menu_setting),
                 trailing: const Icon(Icons.keyboard_arrow_right_sharp),
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SettingPage.builder(),
+                      builder: (context) => SettingPage.build(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('mvvm'),
+                trailing: const Icon(Icons.keyboard_arrow_right_sharp),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MvvmLogic.build(),
                     ),
                   );
                 },

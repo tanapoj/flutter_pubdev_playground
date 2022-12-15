@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pubdev_playground/common/log.dart';
 import 'package:pubdev_playground/common/translate.dart';
-import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
+import 'package:flutter_live_data/index.dart';
 import 'package:pubdev_playground/app/index.dart' as app;
 import 'package:pubdev_playground/ui/pages/my_bloc_2/my_bloc_2.view.dart';
 
@@ -39,10 +39,10 @@ class MyBloc2Page extends app.ComponentLogic {
     var h1 = ui.style.text.size.header1;
   }
 
-  factory MyBloc2Page.builder(String label) {
+  factory MyBloc2Page.build(String label) {
     return MyBloc2Page._(
-      builder: (bloc) => MyBloc2View(
-        bloc as MyBloc2Page,
+      builder: (logic) => MyBloc2View(
+        logic as MyBloc2Page,
         label: label,
       ),
     );
@@ -52,7 +52,6 @@ class MyBloc2Page extends app.ComponentLogic {
   onInit() {
     super.onInit();
     appLog.d('${appLog.green('tag')} message');
-    selfLog('message');
     appLog.d('bloc 2 ------> ${nav.push()}');
 
     Future.delayed(const Duration(seconds: 1), () {

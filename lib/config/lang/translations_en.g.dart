@@ -16,6 +16,7 @@ class TranslationsEn implements BaseTranslations {
 
 	// Translations
 	late final TranslationsHomePageEn home_page = TranslationsHomePageEn._(_root);
+	late final TranslationsTabPageEn tab_page = TranslationsTabPageEn._(_root);
 	late final TranslationsSettingPageEn setting_page = TranslationsSettingPageEn._(_root);
 }
 
@@ -28,6 +29,20 @@ class TranslationsHomePageEn {
 	// Translations
 	String get title => 'Demo';
 	String get menu_setting => 'Setting';
+	String get tab_setting => 'Tab';
+}
+
+// Path: tab_page
+class TranslationsTabPageEn {
+	TranslationsTabPageEn._(this._root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Tab';
+	String get tab_title_first => 'First';
+	String get tab_title_second => 'Second';
+	String get tab_title_setting => 'Setting';
 }
 
 // Path: setting_page
@@ -40,4 +55,6 @@ class TranslationsSettingPageEn {
 	String get title => 'Setting';
 	String get locale_en => 'English';
 	String get locale_th => 'Thai';
+	String get theme_1 => 'Theme I';
+	String get theme_2 => 'Theme II';
 }

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pubdev_playground/ui/widgets/blink.dart';
-import 'package:pubdev_playground/_pub/flutter_bloc_builder/index.dart';
-import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
+import 'package:bloc_builder/index.dart';
+import 'package:flutter_live_data/index.dart';
 
 class ExampleList3Page extends StatefulWidget {
   const ExampleList3Page({
@@ -143,7 +143,7 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
         var continentLv = detach(continentListLv, continentListLv.value[0])!;
         var countryListLv = detach(continentLv, continentLv.value.countries)!;
         var countryLv = detach(countryListLv, countryListLv.value[0]);
-        countryLv?.mutate((country) {
+        countryLv?.patch((country) {
           country.cities.add(
             'Khonkaen',
           );
@@ -156,7 +156,7 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
         var countryListLv = detach(continentLv, continentLv.value.countries)!;
         var countryLv = detach(countryListLv, countryListLv.value[1])!;
         var citiesLv = detach(countryLv, countryLv.value.cities);
-        citiesLv?.mutate((cities) {
+        citiesLv?.patch((cities) {
           cities.add(
             'Hiroshima',
           );
@@ -165,7 +165,7 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
 
       _timer3 = Timer(const Duration(seconds: 6), () {
         guideStep.value = 3;
-        continentListLv.mutate((continentList) {
+        continentListLv.patch((continentList) {
           continentList.add(
             Continent(name: 'Europe', countries: [
               Country(name: 'England', cities: ['London', 'Bristol']),
@@ -179,7 +179,7 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
         guideStep.value = 4;
         var continentLv = detach(continentListLv, continentListLv.value[0])!;
         var ctListLv = detach(continentLv, continentLv.value.countries)!;
-        ctListLv.mutate((countries) {
+        ctListLv.patch((countries) {
           countries.add(
             Country(name: 'China', cities: ['Beijing', 'Shanghai']),
           );
@@ -191,7 +191,7 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
         var continentLv = detach(continentListLv, continentListLv.value[0])!;
         var countryListLv = detach(continentLv, continentLv.value.countries)!;
         var countryLv = detach(countryListLv, countryListLv.value[1]);
-        countryLv?.mutate((country) {
+        countryLv?.patch((country) {
           country.cities.add(
             'Hokkaido',
           );
@@ -202,7 +202,7 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
         guideStep.value = 6;
         var continentLv = detach(continentListLv, continentListLv.value[1])!;
         var ctListLv = detach(continentLv, continentLv.value.countries)!;
-        ctListLv.mutate((countries) {
+        ctListLv.patch((countries) {
           countries.add(
             Country(name: 'Russia', cities: ['Moscow']),
           );
@@ -223,7 +223,7 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
         var countryListLv = detach(continentLv, continentLv.value.countries)!;
         var countryLv = detach(countryListLv, countryListLv.value[0])!;
         var citiesLv = detach(countryLv, countryLv.value.cities)!;
-        citiesLv.mutate((cities) {
+        citiesLv.patch((cities) {
           cities.add(
             'Manchester',
           );
@@ -238,7 +238,7 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
             .detachBy((lv) => lv.value[0])!
             .detachBy((lv) => lv.value.cities)!;
 
-        citiesLv.mutate((cities) {
+        citiesLv.patch((cities) {
           cities.add(
             'Liverpool',
           );
@@ -373,6 +373,7 @@ class _ExampleList3PageState extends State<ExampleList3Page> {
 
   @override
   void dispose() {
+    clearTimer();
     continentListLv.close();
     guideStep.close();
     super.dispose();

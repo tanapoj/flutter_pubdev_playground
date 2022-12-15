@@ -1,23 +1,28 @@
 import 'package:pubdev_playground/_pub/aves/data/networks/network.dart' as network;
+import 'package:pubdev_playground/_pub/aves/facade/index.dart';
 import 'package:pubdev_playground/common/utils.dart';
 import 'package:pubdev_playground/config/context.dart';
-import 'package:pubdev_playground/data/networks/my_api.dart';
+import 'package:pubdev_playground/data/network/my_api.dart';
 
 class MyService {
   final MyNetworkApi api;
 
   MyService(this.api);
 
-  Future<Result<TestModel2>> loadData1({Ctx? ctx}) async {
+  Future<Result<TestModel2>> loadData1({FlowContext? ctx}) async {
     network.Response<TestModel1> response = await api.getData(ctx: ctx).call();
+    if (response.ok) {
+      var data = response.data;
+    }else{
+      var err = response.data;
+    }
     // return Result.fromHttpResponse(response);
     return Result<TestModel2>();
   }
 
-  Future<Result<TestModel2>> loadData2({Ctx? ctx}) async {
+  Future<Result<TestModel2>> loadData2({FlowContext? ctx}) async {
     int x = 0;
-    ctx ??= Ctx();
-    ctx.perform(Performable(
+    FlowContext.from(ctx).perform(Performable(
       when: (ctx) => (ctx.env?.isProduction ?? false) && (ctx.user?.isGuest ?? true),
       action: (ctx) {
         x = 1;
@@ -25,6 +30,7 @@ class MyService {
     ));
     network.Response<TestModel1> response = await api.getData(ctx: ctx).call();
     // return Result.fromHttpResponse(response);
+
     return Result<TestModel2>();
   }
 // Future<Result<TestModel2>> loadData() async {

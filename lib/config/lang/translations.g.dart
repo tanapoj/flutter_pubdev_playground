@@ -1,9 +1,9 @@
 /// Generated file. Do not edit.
 ///
 /// Locales: 2
-/// Strings: 10 (5 per locale)
+/// Strings: 24 (12 per locale)
 ///
-/// Built on 2022-09-06 at 07:29 UTC
+/// Built on 2022-11-16 at 17:08 UTC
 
 
 // coverage:ignore-file

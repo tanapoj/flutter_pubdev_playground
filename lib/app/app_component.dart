@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:pubdev_playground/_pub/aves/common/log.dart';
-import 'package:pubdev_playground/_pub/aves/context.dart';
+import 'package:pubdev_playground/_pub/aves/architecture/context.dart';
 import 'package:pubdev_playground/_pub/aves/index.dart';
-import 'package:pubdev_playground/_pub/aves/component.dart' as aves;
+import 'package:pubdev_playground/_pub/aves/component/logic.dart' as l;
+import 'package:pubdev_playground/_pub/aves/component/view.dart' as v;
 import 'package:pubdev_playground/config/context.dart';
+import 'package:pubdev_playground/model/user.dart';
 import 'package:pubdev_playground/ui/widgets/none.dart';
 import 'index.dart';
 
-abstract class ComponentLogic extends aves.ComponentLogic {
+abstract class ComponentLogic<T> extends l.Logic<T> {
   ComponentLogic({
     Key? key,
     required Widget Function(ComponentLogic) builder,
   }) : super(
           key: key,
-          builder: (aves.ComponentLogic component) => builder(component as ComponentLogic),
+          builder: (component) => builder(component as ComponentLogic),
         );
 
   @override
   construct() {
     super.construct();
-    subscribe(translator.$state, (locale) {
-      rebuild();
-    });
+    // subscribe(translator.$state, (locale) {
+    //   rebuild();
+    // });
   }
 
   AppNavigator get nav {
@@ -29,7 +31,7 @@ abstract class ComponentLogic extends aves.ComponentLogic {
       avesLog.e('context is null');
       throw Exception();
     }
-    return AppProvider.of(context!).navigator;
+    return App.of(context!).navigator;
   }
 
   AppTranslator get translator {
@@ -38,7 +40,7 @@ abstract class ComponentLogic extends aves.ComponentLogic {
       throw Exception();
     }
 
-    return AppProvider.of(context!).translator;
+    return App.of(context!).translator;
   }
 
   AppUi get ui {
@@ -46,23 +48,23 @@ abstract class ComponentLogic extends aves.ComponentLogic {
       avesLog.e('context is null');
       throw Exception();
     }
-    return AppProvider.of(context!).ui;
+    return App.of(context!).ui;
   }
 
-  AppAuth get auth {
+  AppAuth<User> get auth {
     if (context == null) {
       avesLog.e('context is null');
       throw Exception();
     }
-    return AppProvider.of(context!).auth;
+    return App.of(context!).auth;
   }
 
   @override
-  Ctx get ctx => auth.user?.ctx ?? Ctx();
+  FlowContext get ctx => auth.user?.context ?? FlowContext();
 }
 
-abstract class ComponentView<BC extends ComponentLogic> extends aves.ComponentView<BC> {
-  const ComponentView(
+abstract class View<BC extends ComponentLogic> extends v.View<BC> {
+  const View(
     BC component, {
     Key? key,
   }) : super(component, key: key);
@@ -73,7 +75,7 @@ abstract class ComponentView<BC extends ComponentLogic> extends aves.ComponentVi
 
   AppUi get ui => logic.ui;
 
-  AppAuth get auth => logic.auth;
+  AppAuth<User> get auth => logic.auth;
 }
 
 abstract class PageLogic extends ComponentLogic {
@@ -86,7 +88,7 @@ abstract class PageLogic extends ComponentLogic {
         );
 }
 
-abstract class PageView<BC extends ComponentLogic> extends ComponentView<BC> {
+abstract class PageView<BC extends ComponentLogic> extends v.View<BC> {
   const PageView(
     BC component, {
     Key? key,

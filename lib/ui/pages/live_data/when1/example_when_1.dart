@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pubdev_playground/ui/widgets/blink.dart';
-import 'package:pubdev_playground/_pub/flutter_bloc_builder/index.dart';
-import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
+import 'package:bloc_builder/index.dart';
+import 'package:flutter_live_data/index.dart';
 
 class ExampleWhen1Page extends StatefulWidget {
   const ExampleWhen1Page({

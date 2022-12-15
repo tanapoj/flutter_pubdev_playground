@@ -1,35 +1,42 @@
 import 'package:flutter/widgets.dart';
-import 'package:pubdev_playground/_pub/flutter_bloc_builder/base_widget.dart';
-import 'package:pubdev_playground/_pub/flutter_bloc_builder/index.dart';
-import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
+import 'package:bloc_builder/base_widget.dart';
+import 'package:bloc_builder/index.dart';
+import 'package:flutter_live_data/index.dart';
+import 'package:pubdev_playground/common/utils.dart';
 import 'package:pubdev_playground/ui/widgets/none.dart';
 
-class LiveDataStateHolder<Data, Loading, Error> {
-  final LiveData<Data> data;
-  final LiveData<Loading> loading;
-  final LiveData<Error> error;
+class LiveScene<Data, Loading, Error> {
+  final LiveData<Data?> data;
+  final LiveData<Loading?> loading;
+  final LiveData<Error?> error;
 
-  LiveDataStateHolder({
+  LiveScene({
     required this.data,
     required this.loading,
     required this.error,
-  });
+  }) {
+    if (!isNullableType<Data>() || !isNullableType<Loading>() || !isNullableType<Error>()) {
+      throw Exception('to use LiveDataSceneHolder: data, loading, and error must be nullable type');
+    }
+  }
 
-// void dataState() {}
-//
-// void emptyDataState() {}
-//
-// void loadingState() {}
-//
-// void errorState() {}
-//
-// final LiveData<Data?> _data = LiveData<Data?>(null);
-// final LiveData<Loading?> _loading = LiveData<Loading?>(null);
-// final LiveData<Error?> _error = LiveData<Error?>(null);
-//
-// LiveData<Data?> get data$ => _data;
-//
-// set data(Data? data) {}
+  void setStateData(Data value) => {
+        data.value = value,
+        loading.value = null,
+        error.value = null,
+      };
+
+  void setStateLoading(Loading value) => {
+        data.value = null,
+        loading.value = value,
+        error.value = null,
+      };
+
+  void setStateError(Error value) => {
+        data.value = null,
+        loading.value = null,
+        error.value = value,
+      };
 }
 
 class BLoCWidget<T> extends BaseBLoCWidget<T> {
@@ -46,8 +53,8 @@ class BLoCWidget<T> extends BaseBLoCWidget<T> {
   }
 }
 
-BaseBLoCWidget $state<Data, Loading, Error>(
-  LiveDataStateHolder<Data, Loading, Error> state, {
+BaseBLoCWidget $scene<Data, Loading, Error>(
+  LiveScene<Data, Loading, Error> state, {
   Key? key,
   required Widget Function(BuildContext context, Data data) child,
   required Widget Function(BuildContext context) onEmptyData,
@@ -55,9 +62,8 @@ BaseBLoCWidget $state<Data, Loading, Error>(
   required Widget Function(BuildContext context, Error error) onError,
 }) {
   // return BaseBLoCWidget(key: key);
-  return $guard(
+  return $guard.isNotNull(
         state.error,
-        when: (error) => error != null,
         build: (context, Error? error) {
           return BLoCWidget(
             child: (context, {key}) {
@@ -66,9 +72,8 @@ BaseBLoCWidget $state<Data, Loading, Error>(
           );
         },
       ) |
-      $guard(
+      $guard.isNotNull(
         state.loading,
-        when: (loading) => loading != null,
         build: (context, Loading? loading) {
           return BLoCWidget(
             child: (context, {key}) {
@@ -79,7 +84,7 @@ BaseBLoCWidget $state<Data, Loading, Error>(
       ) |
       $guard(
         state.data,
-        when: (data) => data != null,
+        when: (data) => data == null || (data is List && data.isEmpty),
         build: (context, Data? data) {
           return BLoCWidget(
             child: (context, {key}) {

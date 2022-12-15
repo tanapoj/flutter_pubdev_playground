@@ -1,5 +1,7 @@
-import 'package:pubdev_playground/_pub/aves/auth.dart';
-import 'package:pubdev_playground/_pub/aves/context.dart';
+import 'package:dio/dio.dart' as dio;
+import 'package:pubdev_playground/_pub/aves/architecture/auth.dart';
+import 'package:pubdev_playground/_pub/aves/architecture/context.dart';
+import 'package:pubdev_playground/_pub/aves/facade/index.dart';
 import 'package:pubdev_playground/common/utils.dart';
 
 class NetworkApi {
@@ -16,6 +18,7 @@ class Request<T> {
   String method = 'GET';
   String? url = '/';
   String? baseUrl;
+  bool? isIncludeBaseUrl;
   String? accessToken;
   Map<String, dynamic> body = {};
   MockResponse? mockResponse;
@@ -32,6 +35,7 @@ class Request<T> {
       ..method = request.method
       ..url = request.url
       ..baseUrl = request.baseUrl
+      ..isIncludeBaseUrl = true
       ..accessToken = request.accessToken
       ..body = request.body
       ..mockResponse = request.mockResponse;
@@ -39,7 +43,14 @@ class Request<T> {
   }
 
   Future<Response<T>> call() {
-    return Future.value(Response<T>());
+    var flow = app().flow();
+    var v = Future.value(Response<T>());
+    dio.Response<Map<String, dynamic>> res = dio.Response(
+      requestOptions: dio.RequestOptions(
+        path: '',
+      ),
+    );
+    return v;
   }
 
   Request<T> handler(RequestHandler handler) {
@@ -77,8 +88,14 @@ RequestHandler reAuth({
 
 class Response<T> {
   T? _data;
+  String _body = '';
+  int _statusCode = 0;
 
   T get data => _data!;
 
-  bool get isOk => true;
+  String get body => _body;
+
+  int get statusCode => _statusCode;
+
+  bool get ok => true;
 }

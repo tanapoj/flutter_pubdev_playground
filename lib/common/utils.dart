@@ -1,7 +1,8 @@
+bool isNullableType<T>() => null is T;
+
 class Result<T> {
   bool _isAlreadyCallOk = false;
   T? _data;
-  Flow flow = Flow();
 
   Result();
 

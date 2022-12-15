@@ -1,4 +1,4 @@
-import 'package:pubdev_playground/_pub/aves/auth.dart';
+import 'package:pubdev_playground/_pub/aves/architecture/auth.dart';
 import 'package:pubdev_playground/_pub/aves/data/networks/network.dart';
 import 'package:pubdev_playground/common/utils.dart';
 

@@ -1,11 +1,20 @@
 {
   "home_page": {
     "title": "Demo",
-    "menu_setting": "Setting"
+    "menu_setting": "Setting",
+    "tab_setting": "Tab"
+  },
+  "tab_page": {
+    "title": "Tab",
+    "tab_title_first": "First",
+    "tab_title_second": "Second",
+    "tab_title_setting": "Setting"
   },
   "setting_page": {
     "title": "Setting",
     "locale_en": "English",
-    "locale_th": "Thai"
+    "locale_th": "Thai",
+    "theme_1": "Theme I",
+    "theme_2": "Theme II"
   }
 }

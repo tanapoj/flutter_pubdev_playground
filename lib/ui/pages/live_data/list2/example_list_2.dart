@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pubdev_playground/helper.dart';
 import 'package:pubdev_playground/ui/widgets/blink.dart';
-import 'package:pubdev_playground/_pub/flutter_bloc_builder/index.dart';
-import 'package:pubdev_playground/_pub/flutter_live_data/index.dart';
+import 'package:bloc_builder/index.dart';
+import 'package:flutter_live_data/index.dart';
 
 class ExampleList2Page extends StatefulWidget {
   const ExampleList2Page({
@@ -133,7 +133,7 @@ class _ExampleList2PageState extends State<ExampleList2Page> {
                             ),
                           ),
                           onTap: () {
-                            items.mutate((list) {
+                            items.patch((list) {
                               list[index].count++;
                             });
                           },
@@ -151,7 +151,7 @@ class _ExampleList2PageState extends State<ExampleList2Page> {
                           ),
                           onTap: () {
                             var itemLiveData = detach(items, item);
-                            itemLiveData?.mutate((item) {
+                            itemLiveData?.patch((item) {
                               item.count++;
                             });
                           },

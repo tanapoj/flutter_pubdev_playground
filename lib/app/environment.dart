@@ -15,7 +15,7 @@ class Environment extends aves.Environment {
   }
 
   @override
-  bool get isDebug {
+  bool get isUsingDebugMode {
     return true;
   }
 
